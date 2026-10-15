@@ -78,7 +78,7 @@ public class TGM_Team
         if (Tools.ServerRunning())
         {
             if (Tools.IsHost())
-                TGM_Network.SpawnPlayers_ToClients();
+                TGM_Network.SpawnPlayers_ToClients(iff);
             else
                 return;
         }

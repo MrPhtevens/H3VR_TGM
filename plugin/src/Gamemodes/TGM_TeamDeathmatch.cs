@@ -151,6 +151,8 @@ public class TGM_TeamDeathmatch : TGM_Gamemode
     {
         if (TGM_Manager.gameState != TGM_Manager.GameStateEnum.Gameplay)
             return;
+        if (ForwardScoreToHost(teamID, amount, network))
+            return;
 
         //Increase player score
         if (teamID == GM.CurrentPlayerBody.GetPlayerIFF())
@@ -176,8 +178,9 @@ public class TGM_TeamDeathmatch : TGM_Gamemode
     {
         base.OnSosigKilled(s);
 
-        //Score
-        AdjustTeamScore(Global.GetEnemyIFF(s.GetIFF()), 1);
+        //Score (host only, every client sees the same Sosig die)
+        if (!Tools.ServerRunning() || Tools.IsHost())
+            AdjustTeamScore(Global.GetEnemyIFF(s.GetIFF()), 1);
 
         //Remove from sosig team count
         for (int i = 0; i < TGM_Manager.instance.team.Length; i++)

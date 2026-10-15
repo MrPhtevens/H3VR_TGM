@@ -206,8 +206,14 @@ public class TGM_Rush : TGM_Gamemode
             {
                 AdjustTeamScore(redIFF, -TGM_Manager.instance.team[redIFF].currentScore);
                 AdjustTeamScore(blueIFF, TGM_Manager.instance.team[blueIFF].scoreGoal);
-                winIFF = blueIFF;
-                TGM_Manager.instance.SetGameState(TGM_Manager.GameStateEnum.Postgame);
+
+                //Blue reaching its goal already ends the game, only end it here if that didn't happen
+                if (TGM_Manager.gameState == TGM_Manager.GameStateEnum.Gameplay)
+                {
+                    winIFF = blueIFF;
+                    TGM_Manager.instance.SetGameState(TGM_Manager.GameStateEnum.Postgame);
+                }
+                return;
             }
         }
 
@@ -259,21 +265,16 @@ public class TGM_Rush : TGM_Gamemode
     {
         if (TGM_Manager.gameState != TGM_Manager.GameStateEnum.Gameplay || teamIFF == -1)
             return;
+        if (ForwardScoreToHost(teamIFF, amount, network))
+            return;
 
         //Increase player score
         if (teamIFF == GM.CurrentPlayerBody.GetPlayerIFF())
             TGM_Manager.instance.localPlayer.score += amount;
 
         //Network
-        if (Tools.ServerRunning() && network)
-        {
-            if (Tools.IsHost())
-            {
-                TGM_Network.AdjustScores_ToClients(teamIFF, amount);
-            }
-            else
-                TGM_Network.AdjustScores_ToServer(teamIFF, amount);
-        }
+        if (Tools.ServerRunning() && network && Tools.IsHost())
+            TGM_Network.AdjustScores_ToClients(teamIFF, amount);
 
         TGM_Manager.instance.team[teamIFF].currentScore += amount;
 

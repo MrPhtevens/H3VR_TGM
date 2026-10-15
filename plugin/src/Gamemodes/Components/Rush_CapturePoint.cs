@@ -122,10 +122,14 @@ public class Rush_CapturePoint : MonoBehaviour
         if (TGM_Manager.gameState != TGM_Manager.GameStateEnum.Gameplay)
             return false;
 
+        //Only the host counts Sosigs, otherwise every client captures the same point
         for (int i = sosigCount.Count - 1; i >= 0; i--)
         {
             if (sosigCount[i] != null)
-                return true;
+            {
+                if (!Tools.ServerRunning() || Tools.IsHost())
+                    return true;
+            }
             else
                 sosigCount.RemoveAt(i); //Missing Sosig, remove it
         }

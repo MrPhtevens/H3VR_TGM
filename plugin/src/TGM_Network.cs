@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using H3MP.Networking;
 
 namespace TeamsGameMode;
@@ -78,13 +79,14 @@ public  class TGM_Network
 
         TGMPlugin.Logger.LogMessage("Game Settings Received");
 
-        //Gamemode
+        //Gamemode (only reselect on change, selecting resets scores and goes back to Setup)
         int gmi = packet.ReadInt();
-        if(gmi != -1)
+        if (gmi != -1 && (TGM_Manager.instance.gamemode == null || TGM_Manager.instance.gamemode.index != gmi))
             TGM_MainMenu.instance.SelectGamemode(gmi);
 
-        //Game State
-        TGM_Manager.instance.SetGameState((TGM_Manager.GameStateEnum)packet.ReadInt());
+        //Game State (applied after the rest of the packet is read)
+        TGM_Manager.GameStateEnum state = (TGM_Manager.GameStateEnum)packet.ReadInt();
+        int winIFF = packet.ReadInt();
 
         //Game Settings
         for (int i = 0; i < TGM_Settings.gameSettings.Count; i++)
@@ -118,6 +120,12 @@ public  class TGM_Network
             TGM_Scene.instance.areas[i].iff = packet.ReadInt();
         }
 
+        //Only change state if it differs, re-entering a state re-runs its setup
+        if (TGM_Manager.instance.gamemode != null)
+            TGM_Manager.instance.gamemode.winIFF = winIFF;
+        if (TGM_Manager.gameState != state)
+            TGM_Manager.instance.SetGameState(state);
+
         TGM_MainMenu.instance.UpdateSettings();
     }
 
@@ -137,6 +145,7 @@ public  class TGM_Network
 
         //Game State
         packet.Write((int)TGM_Manager.gameState);
+        packet.Write(TGM_Manager.instance.gamemode != null ? TGM_Manager.instance.gamemode.winIFF : -1);
 
         //Game Settings
         for (int i = 0; i < TGM_Settings.gameSettings.Count; i++)
@@ -291,8 +300,8 @@ public  class TGM_Network
         int teamIFF = packet.ReadInt();
         int score = packet.ReadInt();
 
-        //Adjust Score but don't network it
-        TGM_Manager.instance.gamemode.AdjustTeamScore(teamIFF, score, false);
+        //Host applies client requests and rebroadcasts them, clients just apply
+        TGM_Manager.instance.gamemode.AdjustTeamScore(teamIFF, score, Tools.IsHost());
     }
 
     public static void AdjustScores_ToServer(int teamIFF, int amount)
@@ -333,23 +342,26 @@ public  class TGM_Network
         if (!Tools.ServerRunning() || Tools.IsHost())
             return;
 
-        //Respawn players!
-        for (int i = 0; i < TGM_Manager.instance.team.Length; i++)
-        {
-            TGM_Manager.instance.team[i].Respawn();
-        }
-
+        //Respawn only the team whose wave fired
+        int iff = packet.ReadInt();
+        if (iff >= 0 && iff < TGM_Manager.instance.team.Length)
+            TGM_Manager.instance.team[iff].Respawn();
     }
 
-    private static float SpawnplayersTimeout = 1;
-    public static void SpawnPlayers_ToClients()
+    private static Dictionary<int, float> spawnPlayersTimeout = new Dictionary<int, float>();
+    public static void SpawnPlayers_ToClients(int iff)
     {
-        if (!Tools.ServerRunning() || connectionSpawnPlayers == null || Time.time < SpawnplayersTimeout)
+        if (!Tools.ServerRunning() || connectionSpawnPlayers == null)
             return;
 
-        //Time out our respawns so we don't multi trigger
-        SpawnplayersTimeout = Time.time + 1;
+        //Time out our respawns per team so we don't multi trigger
+        float timeout;
+        if (spawnPlayersTimeout.TryGetValue(iff, out timeout) && Time.time < timeout)
+            return;
+        spawnPlayersTimeout[iff] = Time.time + 1;
+
         PacketData packet = new PacketData(connectionSpawnPlayers.ToClientID);
+        packet.Write(iff);
         connectionSpawnPlayers.ServerToClients(packet);
     }
 }

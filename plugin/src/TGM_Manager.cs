@@ -256,6 +256,10 @@ public class TGM_Manager : MonoBehaviour
 
     public IEnumerator SetGameStateDelayed(GameStateEnum state, float delay)
     {
+        //Clients follow the host's state changes instead of running their own timers
+        if (Tools.ServerRunning() && !Tools.IsHost())
+            yield break;
+
         yield return new WaitForSeconds(delay);
 
         //New State

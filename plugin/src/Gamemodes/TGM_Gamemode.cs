@@ -232,16 +232,26 @@ public class TGM_Gamemode
 
         if (TGM_Manager.gameState != TGM_Manager.GameStateEnum.Gameplay)
             return;
+        if (ForwardScoreToHost(teamIFF, amount, network))
+            return;
         TGM_Manager.instance.team[teamIFF].currentScore += amount;
 
         //Network
-        if (Tools.ServerRunning() && network)
-        {
-            if (Tools.IsHost())
-                TGM_Network.AdjustScores_ToClients(teamIFF, amount);
-            else
-                TGM_Network.AdjustScores_ToServer(teamIFF, amount);
-        }
+        if (Tools.ServerRunning() && network && Tools.IsHost())
+            TGM_Network.AdjustScores_ToClients(teamIFF, amount);
+    }
+
+    /// <summary>
+    /// Clients send score changes to the host instead of applying them, the host applies and sends them back to everyone
+    /// </summary>
+    /// <returns>True if the score was forwarded and should not be applied locally</returns>
+    protected bool ForwardScoreToHost(int teamIFF, int amount, bool network)
+    {
+        if (!network || !Tools.ServerRunning() || Tools.IsHost())
+            return false;
+
+        TGM_Network.AdjustScores_ToServer(teamIFF, amount);
+        return true;
     }
 
     public virtual void OnSosigCreate(Sosig s)
