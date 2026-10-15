@@ -301,6 +301,7 @@ public class TGM_Gamemode
     /// </summary>
     public virtual void RespawnTime()
     {
+        bool waveFired = false;
         for (int i = 0; i < TGM_Manager.instance.team.Length; i++)
         {
             if (Time.time >= TGM_Manager.instance.team[i].respawnTime)
@@ -308,7 +309,12 @@ public class TGM_Gamemode
                 TGMPlugin.Logger.LogDebug("Gamemode: RespawnTime at: " + Time.time + " for team " + i);
                 TGM_Manager.instance.team[i].Respawn();
                 TGM_Manager.instance.team[i].respawnTime = Time.time + TGM_Scene.instance.teams[i].teamSpawnTime;
+                waveFired = true;
             }
         }
+
+        //Sync respawn timers, scores and areas to clients
+        if (waveFired)
+            TGM_Network.Gameplay_ToClients();
     }
 }

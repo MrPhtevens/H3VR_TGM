@@ -191,6 +191,7 @@ public class TGM_Rush : TGM_Gamemode
                 TGMPlugin.Logger.LogDebug("Gamemode: RespawnTime at: " + Time.time + " for team " + blueIFF);
                 TGM_Manager.instance.team[blueIFF].Respawn();
                 TGM_Manager.instance.team[blueIFF].respawnTime = Time.time + TGM_Scene.instance.teams[blueIFF].teamSpawnTime;
+                TGM_Network.Gameplay_ToClients();
             }
         }
 

@@ -33,7 +33,7 @@ public  class TGM_Network
 
 
         connectionSpawnPlayers = Tools.CreateCustomConnection("TGM_SpawnPlayers");
-        connectionSpawnPlayers.ServerHandlerEvent += SpawnPlayers_Receiver;
+        connectionSpawnPlayers.ClientHandlerEvent += SpawnPlayers_Receiver;
     }
 
     public static void OnDestroyed()
@@ -51,6 +51,19 @@ public  class TGM_Network
             connectionAdjustScores.ServerHandlerEvent -= AdjustScores_Receiver;
         if (connectionAdjustScores != null)
             connectionAdjustScores.ClientHandlerEvent -= AdjustScores_Receiver;
+        if (connectionSpawnPlayers != null)
+            connectionSpawnPlayers.ClientHandlerEvent -= SpawnPlayers_Receiver;
+    }
+
+    //Find an area by its index value (array order can differ, e.g. Rush reverse mode)
+    static TGM_Area GetAreaByIndex(int index)
+    {
+        for (int i = 0; i < TGM_Scene.instance.areas.Length; i++)
+        {
+            if (TGM_Scene.instance.areas[i].index == index)
+                return TGM_Scene.instance.areas[i];
+        }
+        return null;
     }
 
     //------------------------------------------------------------------------------
@@ -94,7 +107,9 @@ public  class TGM_Network
             TGM_Manager.instance.team[teamIFF].scoreGoal = packet.ReadInt();
             TGM_Manager.instance.team[teamIFF].currentScore = packet.ReadInt();
             TGM_Manager.instance.team[teamIFF].currentKills = packet.ReadInt();
-            TGM_Manager.instance.team[teamIFF].currentSpawnArea.index = packet.ReadInt();
+            TGM_Area spawnArea = GetAreaByIndex(packet.ReadInt());
+            if (spawnArea != null)
+                TGM_Manager.instance.team[teamIFF].currentSpawnArea = spawnArea;
         }
 
         //Areas
@@ -164,8 +179,8 @@ public  class TGM_Network
 
     static void RequestSettings_Receiver(int clientID, PacketData packet)
     {
-        //Host doesn't get settings
-        if (!Tools.ServerRunning() || Tools.IsHost())
+        //Only the host answers settings requests
+        if (!Tools.ServerRunning() || !Tools.IsHost())
             return;
 
         TGMPlugin.Logger.LogMessage("Request Settings Received");
@@ -207,7 +222,9 @@ public  class TGM_Network
             TGM_Manager.instance.team[teamIFF].scoreGoal = packet.ReadInt();
             TGM_Manager.instance.team[teamIFF].currentScore = packet.ReadInt();
             TGM_Manager.instance.team[teamIFF].currentKills = packet.ReadInt();
-            TGM_Manager.instance.team[teamIFF].currentSpawnArea.index = packet.ReadInt();
+            TGM_Area spawnArea = GetAreaByIndex(packet.ReadInt());
+            if (spawnArea != null)
+                TGM_Manager.instance.team[teamIFF].currentSpawnArea = spawnArea;
         }
 
         //Areas
@@ -215,6 +232,7 @@ public  class TGM_Network
         {
             TGM_Scene.instance.areas[i].iff = packet.ReadInt();
         }
+        TGM_Scene.UpdateAllAreas();
     }
 
     public static void Gameplay_ToServer()
@@ -232,7 +250,7 @@ public  class TGM_Network
 
     public static void Gameplay_ToClients()
     {
-        if (!Tools.ServerRunning())
+        if (!Tools.ServerRunning() || !Tools.IsHost() || connectionGameplay == null)
             return;
 
         TGMPlugin.Logger.LogMessage("Gameplay To Clients");
@@ -243,8 +261,8 @@ public  class TGM_Network
         //Teams
         for (int i = 0; i < TGM_Manager.instance.team.Length; i++)
         {
-            //Time left before spawn
-            packet.Write(Time.time - TGM_Manager.instance.team[i].respawnTime);
+            //Time left before spawn (client adds its own Time.time)
+            packet.Write(TGM_Manager.instance.team[i].respawnTime - Time.time);
             packet.Write(TGM_Manager.instance.team[i].scoreGoal);
             packet.Write(TGM_Manager.instance.team[i].currentScore);
             packet.Write(TGM_Manager.instance.team[i].currentKills);
