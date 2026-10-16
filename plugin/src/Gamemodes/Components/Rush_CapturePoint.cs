@@ -54,6 +54,7 @@ public class Rush_CapturePoint : MonoBehaviour
 
     AudioSource alarmSource;
     static AudioClip alarmClip;
+    static AudioClip armingClip;
 
     static bool IsAuthority => !Tools.ServerRunning() || Tools.IsHost();
 
@@ -82,11 +83,10 @@ public class Rush_CapturePoint : MonoBehaviour
         //Arming sound, louder and audible from further away
         if (audioSource != null)
         {
-            AudioClip capturing = TGM_McomSounds.arming;
-            if (capturing == null)
-                capturing = TGM_Scene.instance.audioCapturing != null ? TGM_Scene.instance.audioCapturing : TGM_Manager.instance.audioCapturing;
-            if (capturing != null)
-                audioSource.clip = capturing;
+            //The mod's "capturing" clip is an announcer voice line, not a loop, so use a generated beep instead
+            if (armingClip == null)
+                armingClip = CreateArmingClip();
+            audioSource.clip = TGM_McomSounds.arming != null ? TGM_McomSounds.arming : armingClip;
             audioSource.loop = true;
             audioSource.spatialBlend = 1;
             audioSource.rolloffMode = AudioRolloffMode.Linear;
@@ -108,6 +108,28 @@ public class Rush_CapturePoint : MonoBehaviour
         alarmSource.minDistance = 15;
         alarmSource.maxDistance = 120;
         alarmSource.volume = 1;
+    }
+
+    /// <summary>
+    /// Generates a quick electronic tick, looped it sounds like a device being armed (pitch rises with progress)
+    /// </summary>
+    static AudioClip CreateArmingClip()
+    {
+        const int rate = 44100;
+        const float length = 0.25f;
+        float[] data = new float[(int)(rate * length)];
+        for (int i = 0; i < data.Length; i++)
+        {
+            float t = (float)i / rate;
+            if (t < 0.05f)
+            {
+                float fade = 1 - (t / 0.05f);   //Short decay so it clicks rather than buzzes
+                data[i] = Mathf.Sin(2 * Mathf.PI * 1600 * t) * 0.4f * fade;
+            }
+        }
+        AudioClip clip = AudioClip.Create("TGM_McomArming", data.Length, 1, rate, false);
+        clip.SetData(data, 0);
+        return clip;
     }
 
     /// <summary>

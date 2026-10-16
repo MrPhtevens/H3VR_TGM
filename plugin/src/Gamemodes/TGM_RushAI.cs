@@ -41,7 +41,10 @@ public class TGM_RushAI
 
     readonly Dictionary<Sosig, float> nextOrder = new Dictionary<Sosig, float>();
     readonly Dictionary<Sosig, float> defaultPushRange = new Dictionary<Sosig, float>();
+    readonly Dictionary<Sosig, float> defaultHearing = new Dictionary<Sosig, float>();
     readonly Sosig[] operators = new Sosig[2];
+    const float operatorCheckInterval = 0.25f;  //Operators are kept on task more often than everyone else
+    float nextOperatorCheck = 0;
     float nextTick = 0;
     int lastPhase = -1;
 
@@ -61,6 +64,17 @@ public class TGM_RushAI
 
     public void Update(Rush_CapturePoint objective, TGM_Area defenderArea, bool isReversed)
     {
+        //Pull operators back straight away if anything distracted them
+        if (Time.time >= nextOperatorCheck)
+        {
+            nextOperatorCheck = Time.time + operatorCheckInterval;
+            for (int i = 0; i < operators.Length; i++)
+            {
+                if (operators[i] != null && operators[i].BodyState != Sosig.SosigBodyState.Dead)
+                    HoldMcom(operators[i], objective.transform.position);
+            }
+        }
+
         if (Time.time < nextTick)
             return;
         nextTick = Time.time + tickInterval;
@@ -170,6 +184,8 @@ public class TGM_RushAI
             float range;
             if (defaultPushRange.TryGetValue(previous, out range))
                 previous.m_assaultPointOverridesSkirmishPointWhenFurtherThan = range;
+            if (defaultHearing.TryGetValue(previous, out range))
+                previous.MaxHearingRange = range;
             nextOrder.Remove(previous);
         }
 
@@ -181,6 +197,11 @@ public class TGM_RushAI
         if (!defaultPushRange.ContainsKey(s))
             defaultPushRange[s] = s.m_assaultPointOverridesSkirmishPointWhenFurtherThan;
         s.m_assaultPointOverridesSkirmishPointWhenFurtherThan = 1;
+
+        //Deaf while on the job so noises don't send it off investigating, it still sees and shoots enemies
+        if (!defaultHearing.ContainsKey(s))
+            defaultHearing[s] = s.MaxHearingRange;
+        s.MaxHearingRange = 0;
     }
 
     /// <summary>
@@ -381,6 +402,7 @@ public class TGM_RushAI
     {
         RemoveDestroyed(nextOrder);
         RemoveDestroyed(defaultPushRange);
+        RemoveDestroyed(defaultHearing);
     }
 
     static void RemoveDestroyed(Dictionary<Sosig, float> dictionary)
