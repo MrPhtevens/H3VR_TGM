@@ -11,6 +11,7 @@ public static class TGM_Tactics
     const float bodyHeight = 0.9f;      //Chest height when crouched behind something
     const float headHeight = 1.6f;      //Standing head height, to shoot over cover
     const float coverCheckDistance = 5; //Cover has to be this close in the threat direction
+    const float maxSlopeAngle = 60;     //Surfaces flatter than this are ground, not cover
 
     static int coverMask = 0;
 
@@ -62,18 +63,32 @@ public static class TGM_Tactics
     }
 
     /// <summary>
-    /// 2 for something solid in front at chest height, +1 if the head is clear to shoot over it
+    /// 2 for something solid in front at chest height, +1 if the head is clear to shoot over it.
+    /// Only steep surfaces count, rising ground on a hill is not cover.
     /// </summary>
     static float CoverScore(Vector3 position, Vector3 threat)
     {
         float score = 0;
-        if (Physics.Raycast(position + Vector3.up * bodyHeight, threat, coverCheckDistance, CoverMask, QueryTriggerInteraction.Ignore))
+        RaycastHit hit;
+        if (Physics.Raycast(position + Vector3.up * bodyHeight, threat, out hit, coverCheckDistance, CoverMask, QueryTriggerInteraction.Ignore)
+            && IsWall(hit))
         {
             score += 2;
-            if (!Physics.Raycast(position + Vector3.up * headHeight, threat, coverCheckDistance, CoverMask, QueryTriggerInteraction.Ignore))
+            if (!Physics.Raycast(position + Vector3.up * headHeight, threat, out hit, coverCheckDistance, CoverMask, QueryTriggerInteraction.Ignore)
+                || !IsWall(hit))
                 score += 1;
         }
         return score;
+    }
+
+    /// <summary>
+    /// Walls, rocks, crates, vehicles - not terrain or slopes you can walk up
+    /// </summary>
+    static bool IsWall(RaycastHit hit)
+    {
+        if (hit.collider is TerrainCollider)
+            return false;
+        return Vector3.Angle(hit.normal, Vector3.up) > maxSlopeAngle;
     }
 
     public static Vector3 SampleNavMesh(Vector3 point, float radius = 8)

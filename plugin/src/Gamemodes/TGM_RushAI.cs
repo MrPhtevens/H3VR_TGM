@@ -27,9 +27,14 @@ public class TGM_RushAI
     //Attacker squads
     const int squadSize = 4;                    //Max Sosigs per squad
     const float squadFormWindow = 2;            //Sosigs spawned within this many seconds join the same squad
-    const float boundStep = 15;                 //How far the moving half advances per bound
-    const float boundTimeout = 12;              //Swap halves after this long even if the movers haven't arrived
-    const float boundArriveDistance = 4;        //Movers count as arrived this close to their spot
+    const float boundStep = 20;                 //How far the moving half advances per bound
+    const float boundTimeout = 6;               //Swap halves after this long even if the movers haven't arrived
+    const float boundArriveDistance = 5;        //Movers count as arrived this close to their spot
+    const float boundZone = 45;                 //Squads always leap-frog this close to the Mcom
+    const float contactMemory = 8;              //Squads keep leap-frogging this long after their last fight
+    const float travelStep = 30;                //Out of contact, squads run towards a waypoint this far ahead
+    const float travelSpacing = 3;              //Sideways gap between squad members while travelling
+    const float operatorCommitRange = 30;       //Red's operator goes for the Mcom once a squad (or it) is this close
     const float squadReplanMin = 25;            //Squads pick a new target every replanMin-replanMax seconds
     const float squadReplanMax = 40;
 
@@ -59,6 +64,8 @@ public class TGM_RushAI
         public int movingHalf;      //Members with index % 2 == movingHalf are moving
         public float boundStarted;
         public bool arrived;
+        public bool bounding;       //Leap-frogging (in contact) instead of travelling together
+        public float lastContact = -100;
         public float nextReplan;
         public readonly Dictionary<Sosig, Vector3> spots = new Dictionary<Sosig, Vector3>();
     }
@@ -70,6 +77,7 @@ public class TGM_RushAI
     readonly Dictionary<Sosig, float> defaultPushRange = new Dictionary<Sosig, float>();
     readonly Dictionary<Sosig, float> defaultHearing = new Dictionary<Sosig, float>();
     readonly Sosig[] operators = new Sosig[2];
+    bool operatorCommitted = false;     //Red's operator has gone for the Mcom
     float nextOperatorCheck = 0;
     float nextTick = 0;
     int lastPhase = -1;
@@ -110,7 +118,11 @@ public class TGM_RushAI
             nextOperatorCheck = Time.time + operatorCheckInterval;
             for (int i = 0; i < operators.Length; i++)
             {
-                if (operators[i] != null && operators[i].BodyState != Sosig.SosigBodyState.Dead)
+                if (operators[i] == null || operators[i].BodyState == Sosig.SosigBodyState.Dead)
+                    continue;
+                if (i == redIFF)
+                    UpdateAttackOperator(operators[i], mcom);
+                else
                     HoldMcom(operators[i], mcom);
             }
         }
@@ -148,10 +160,7 @@ public class TGM_RushAI
         {
             Sosig s = defenders[i];
             if (s == operators[blueIFF])
-            {
-                HoldMcom(s, mcom);
-                continue;
-            }
+                continue;   //Kept on the Mcom by the operator check above
 
             float next;
             if (phaseChanged || !nextOrder.TryGetValue(s, out next) || Time.time >= next)
@@ -241,6 +250,8 @@ public class TGM_RushAI
         }
 
         operators[iff] = s;
+        if (iff == redIFF)
+            operatorCommitted = false;
         if (s == null)
             return;
 
@@ -257,6 +268,49 @@ public class TGM_RushAI
         if (!defaultHearing.ContainsKey(s))
             defaultHearing[s] = s.MaxHearingRange;
         s.MaxHearingRange = 0;
+    }
+
+    /// <summary>
+    /// Red's operator moves with the nearest squad and only goes for the Mcom once friends are close,
+    /// instead of running in alone
+    /// </summary>
+    void UpdateAttackOperator(Sosig s, Vector3 mcom)
+    {
+        Squad escort = null;
+        float escortDistance = float.MaxValue;
+        bool friendsClose = false;
+        for (int i = 0; i < squads.Count; i++)
+        {
+            if (squads[i].members.Count == 0)
+                continue;
+            Vector3 centroid = Centroid(squads[i]);
+            if (Vector3.Distance(centroid, mcom) <= operatorCommitRange)
+                friendsClose = true;
+            float distance = Vector3.Distance(centroid, s.transform.position);
+            if (distance < escortDistance)
+            {
+                escort = squads[i];
+                escortDistance = distance;
+            }
+        }
+
+        if (operatorCommitted || escort == null || friendsClose || Vector3.Distance(s.transform.position, mcom) <= operatorCommitRange)
+        {
+            operatorCommitted = true;   //Once it goes for the Mcom it doesn't turn back
+            HoldMcom(s, mcom);
+            return;
+        }
+
+        //Stay with the escort squad
+        Vector3 follow = Centroid(escort);
+        bool following = s.CurrentOrder == Sosig.SosigOrder.Assault
+            && Vector3.Distance(s.m_assaultPoint, follow) < 8;
+        if (!following)
+        {
+            s.SetAssaultSpeed(Sosig.SosigMoveSpeed.Running);
+            s.CommandAssaultPoint(TGM_Tactics.SampleNavMesh(follow));
+            s.FallbackOrder = Sosig.SosigOrder.Assault;
+        }
     }
 
     /// <summary>
@@ -338,7 +392,7 @@ public class TGM_RushAI
             if (!squad.hasTarget || phaseChanged || Time.time >= squad.nextReplan)
                 PlanSquad(squad, mcom, phase, approach, defenderArea, isReversed);
 
-            UpdateBound(squad, mcom, phase, approach);
+            MoveSquad(squad, mcom, phase, approach);
         }
     }
 
@@ -395,17 +449,106 @@ public class TGM_RushAI
     }
 
     /// <summary>
-    /// Leap-frog: one half moves up while the other holds and covers, then they swap
+    /// Out of contact the squad runs together, in contact (or close to the Mcom) it leap-frogs
     /// </summary>
-    void UpdateBound(Squad squad, Vector3 mcom, Phase phase, Vector3 approach)
+    void MoveSquad(Squad squad, Vector3 mcom, Phase phase, Vector3 approach)
     {
         if (squad.arrived)
             return;
 
+        Vector3 centroid = Centroid(squad);
+
         //Threat is towards the Mcom while attacking, from the defenders' side once armed
-        Vector3 threat = phase == Phase.Armed ? -approach : TGM_Tactics.Flatten(mcom - Centroid(squad));
+        Vector3 threat = phase == Phase.Armed ? -approach : TGM_Tactics.Flatten(mcom - centroid);
         bool contested = phase != Phase.Idle;
 
+        if (InContact(squad))
+            squad.lastContact = Time.time;
+        bool bound = Time.time - squad.lastContact < contactMemory
+            || Vector3.Distance(centroid, mcom) < boundZone;
+
+        if (!bound)
+        {
+            squad.bounding = false;
+            Travel(squad, centroid, threat, contested);
+            return;
+        }
+
+        //Just made contact, start leap-frogging from where the squad is
+        if (!squad.bounding)
+        {
+            squad.bounding = true;
+            squad.front = centroid;
+            squad.boundStarted = -boundTimeout;
+            squad.spots.Clear();
+        }
+        Bound(squad, threat, contested);
+    }
+
+    /// <summary>
+    /// Whole squad runs towards a waypoint ahead, spread out side by side, no stopping
+    /// </summary>
+    void Travel(Squad squad, Vector3 centroid, Vector3 threat, bool contested)
+    {
+        if (Vector3.Distance(centroid, squad.target) < boundArriveDistance)
+        {
+            Settle(squad, threat, contested);
+            return;
+        }
+
+        Vector3 direction = TGM_Tactics.Flatten(squad.target - centroid);
+        Vector3 side = Vector3.Cross(Vector3.up, direction);
+        Vector3 waypoint = Vector3.MoveTowards(centroid, squad.target, travelStep);
+
+        for (int i = 0; i < squad.members.Count; i++)
+        {
+            Sosig s = squad.members[i];
+            float lateral = (i - (squad.members.Count - 1) / 2f) * travelSpacing;
+            Vector3 point = waypoint + side * lateral - direction * (i % 2) * 2;
+
+            //Already running to roughly the right place, don't interrupt
+            bool onTheWay = s.CurrentOrder == Sosig.SosigOrder.Assault
+                && Vector3.Distance(s.m_assaultPoint, point) < 10
+                && Vector3.Distance(s.transform.position, s.m_assaultPoint) > 8;
+            if (!onTheWay)
+                CommandSosig(s, point, true, false);
+        }
+        squad.spots.Clear();
+    }
+
+    /// <summary>
+    /// Squad reached its target, everyone takes cover around it
+    /// </summary>
+    void Settle(Squad squad, Vector3 threat, bool contested)
+    {
+        squad.arrived = true;
+        for (int i = 0; i < squad.members.Count; i++)
+        {
+            Vector3 spot = TGM_Tactics.FindCover(squad.target, threat, coverSearchRadius + 2);
+            CommandSosig(squad.members[i], spot, false, contested);
+            squad.spots[squad.members[i]] = spot;
+        }
+    }
+
+    /// <summary>
+    /// Someone in the squad is fighting
+    /// </summary>
+    static bool InContact(Squad squad)
+    {
+        for (int i = 0; i < squad.members.Count; i++)
+        {
+            Sosig.SosigOrder order = squad.members[i].CurrentOrder;
+            if (order == Sosig.SosigOrder.Skirmish || order == Sosig.SosigOrder.TakeCover)
+                return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Leap-frog: one half moves up while the other holds and covers, then they swap
+    /// </summary>
+    void Bound(Squad squad, Vector3 threat, bool contested)
+    {
         //Wait for the movers to get to their spots (or give up waiting)
         if (Time.time - squad.boundStarted < boundTimeout && !MoversArrived(squad))
             return;
@@ -413,13 +556,7 @@ public class TGM_RushAI
         //Whole squad reached the target, settle into cover around it
         if (Vector3.Distance(squad.front, squad.target) < 1)
         {
-            squad.arrived = true;
-            for (int i = 0; i < squad.members.Count; i++)
-            {
-                Vector3 spot = TGM_Tactics.FindCover(squad.target, threat, coverSearchRadius + 2);
-                CommandSosig(squad.members[i], spot, false, contested);
-                squad.spots[squad.members[i]] = spot;
-            }
+            Settle(squad, threat, contested);
             return;
         }
 
