@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using FistVR;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace TeamsGameMode;
 
 /// <summary>
-/// Rush Sosig orders, host only. Each team has one operator who works the Mcom (Red arms / holds it,
-/// Blue disarms it), everyone else gets spread out roles around it that rotate over time.
+/// Rush Sosig orders, host only.
+/// Each team has one operator who works the Mcom (Red arms / holds it, Blue disarms it).
+/// Red moves in squads that leap-frog towards their target, Blue holds layered positions.
+/// Everyone prefers spots with cover from the enemy's direction (see TGM_Tactics).
 /// </summary>
 public class TGM_RushAI
 {
@@ -18,52 +19,91 @@ public class TGM_RushAI
     // Tuning
     //------------------------------------------------------------------------------
 
-    const float tickInterval = 1;           //How often orders are checked
-    const float reorderMin = 15;            //Each Sosig gets new orders every reorderMin-reorderMax seconds
-    const float reorderMax = 30;
-    const float onPointRadius = 2.5f;       //Close enough to the Mcom to arm / disarm it
+    const float tickInterval = 1;               //How often orders are checked
+    const float operatorCheckInterval = 0.25f;  //Operators are kept on task more often than everyone else
+    const float onPointRadius = 2.5f;           //Close enough to the Mcom to arm / disarm it
+    const float coverSearchRadius = 4;          //How far from a chosen spot to look for cover
 
-    //Attackers, Mcom not armed (rest push forward along the approach)
-    const float redEscortChance = 0.5f;     //Move up with the operator on the approach side
-    const float redFlankChance = 0.25f;     //Go through the map's attack areas
-    //Attackers, Mcom armed (rest hunt towards the defenders' side)
-    const float redGuardArmedChance = 0.75f;
+    //Attacker squads
+    const int squadSize = 4;                    //Max Sosigs per squad
+    const float squadFormWindow = 2;            //Sosigs spawned within this many seconds join the same squad
+    const float boundStep = 15;                 //How far the moving half advances per bound
+    const float boundTimeout = 12;              //Swap halves after this long even if the movers haven't arrived
+    const float boundArriveDistance = 4;        //Movers count as arrived this close to their spot
+    const float squadReplanMin = 25;            //Squads pick a new target every replanMin-replanMax seconds
+    const float squadReplanMax = 40;
 
-    //Defenders, nothing happening (rest anchor near the Mcom)
-    const float blueForwardChance = 0.3f;   //Meet the attack on the approach
-    const float blueLaneChance = 0.3f;      //The map's defend areas
-    const float blueOverwatchChance = 0.25f;//Ring at mid range around the Mcom
-    //Defenders, Mcom being armed / armed
-    const float blueReactRange = 60;        //Defenders this close react
-    const float blueResponderChance = 0.35f;//Close in and fight, rest hold an overwatch ring
+    //Defenders
+    const float blueReorderMin = 15;            //Defenders get new orders every reorderMin-reorderMax seconds
+    const float blueReorderMax = 30;
+    const float blueForwardChance = 0.3f;       //Meet the attack on the approach
+    const float blueLaneChance = 0.3f;          //The map's defend areas
+    const float blueOverwatchChance = 0.25f;    //Ring at mid range around the Mcom (rest anchor near it)
+    const float blueReactRange = 60;            //Defenders this close react when the Mcom is contested
+    const float blueResponderChance = 0.35f;    //Close in and fight, rest hold an overwatch ring
 
     //------------------------------------------------------------------------------
+
+    enum Phase { Idle = 0, Arming = 1, Armed = 2 }
+    enum SquadRole { Assault, Flank, Overwatch }
+    static readonly SquadRole[] roleCycle = { SquadRole.Assault, SquadRole.Flank, SquadRole.Assault, SquadRole.Overwatch };
+
+    class Squad
+    {
+        public readonly List<Sosig> members = new List<Sosig>();
+        public SquadRole role;
+        public float formedAt;
+        public bool hasTarget;
+        public Vector3 target;      //Where the squad wants to end up
+        public Vector3 front;       //Where the current moving half is heading
+        public int movingHalf;      //Members with index % 2 == movingHalf are moving
+        public float boundStarted;
+        public bool arrived;
+        public float nextReplan;
+        public readonly Dictionary<Sosig, Vector3> spots = new Dictionary<Sosig, Vector3>();
+    }
+
+    readonly List<Squad> squads = new List<Squad>();
+    int nextRoleIndex = 0;
 
     readonly Dictionary<Sosig, float> nextOrder = new Dictionary<Sosig, float>();
     readonly Dictionary<Sosig, float> defaultPushRange = new Dictionary<Sosig, float>();
     readonly Dictionary<Sosig, float> defaultHearing = new Dictionary<Sosig, float>();
     readonly Sosig[] operators = new Sosig[2];
-    const float operatorCheckInterval = 0.25f;  //Operators are kept on task more often than everyone else
     float nextOperatorCheck = 0;
     float nextTick = 0;
     int lastPhase = -1;
-
-    enum Phase { Idle = 0, Arming = 1, Armed = 2 }
+    bool lastArmed = false;
 
     /// <summary>
-    /// New objective or new game, everyone gets fresh orders and operators are picked again
+    /// New objective: everyone gets fresh orders, operators and squad targets are picked again
     /// </summary>
     public void Reset()
     {
         nextOrder.Clear();
         for (int i = 0; i < operators.Length; i++)
             SetOperator(i, null);
+        for (int i = 0; i < squads.Count; i++)
+            squads[i].hasTarget = false;
         nextTick = 0;
         lastPhase = -1;
+        lastArmed = false;
+    }
+
+    /// <summary>
+    /// New game, also disband all squads
+    /// </summary>
+    public void ResetAll()
+    {
+        Reset();
+        squads.Clear();
+        nextRoleIndex = 0;
     }
 
     public void Update(Rush_CapturePoint objective, TGM_Area defenderArea, bool isReversed)
     {
+        Vector3 mcom = objective.transform.position;
+
         //Pull operators back straight away if anything distracted them
         if (Time.time >= nextOperatorCheck)
         {
@@ -71,7 +111,7 @@ public class TGM_RushAI
             for (int i = 0; i < operators.Length; i++)
             {
                 if (operators[i] != null && operators[i].BodyState != Sosig.SosigBodyState.Dead)
-                    HoldMcom(operators[i], objective.transform.position);
+                    HoldMcom(operators[i], mcom);
             }
         }
 
@@ -79,13 +119,11 @@ public class TGM_RushAI
             return;
         nextTick = Time.time + tickInterval;
 
-        Vector3 mcom = objective.transform.position;
         Phase phase = GetPhase(objective);
         bool phaseChanged = (int)phase != lastPhase;
         lastPhase = (int)phase;
 
         Forget();
-
         for (int iff = 0; iff < TGM_Manager.instance.team.Length; iff++)
         {
             //Remove destroyed or dead Sosigs so they don't block respawns
@@ -97,32 +135,45 @@ public class TGM_RushAI
         UpdateOperator(blueIFF, phase == Phase.Armed, mcom);
 
         Vector3 approach = GetApproachDirection(mcom);
-        for (int iff = 0; iff < TGM_Manager.instance.team.Length && iff < operators.Length; iff++)
-        {
-            List<Sosig> sosigs = TGM_Manager.instance.team[iff].sosigs;
-            for (int i = 0; i < sosigs.Count; i++)
-            {
-                Sosig s = sosigs[i];
-                if (s == operators[iff])
-                {
-                    HoldMcom(s, mcom);
-                    continue;
-                }
 
-                float next;
-                if (phaseChanged || !nextOrder.TryGetValue(s, out next) || Time.time >= next)
-                    Order(s, iff, mcom, phase, approach, defenderArea, isReversed);
+        //ATTACKERS: squads (only re-plan when the Mcom becomes armed or stops being armed, arming flickers)
+        bool armed = phase == Phase.Armed;
+        bool armedChanged = armed != lastArmed;
+        lastArmed = armed;
+        UpdateSquads(mcom, phase, armedChanged, approach, defenderArea, isReversed);
+
+        //DEFENDERS: individual layered roles
+        List<Sosig> defenders = TGM_Manager.instance.team[blueIFF].sosigs;
+        for (int i = 0; i < defenders.Count; i++)
+        {
+            Sosig s = defenders[i];
+            if (s == operators[blueIFF])
+            {
+                HoldMcom(s, mcom);
+                continue;
             }
+
+            float next;
+            if (phaseChanged || !nextOrder.TryGetValue(s, out next) || Time.time >= next)
+                OrderDefender(s, mcom, phase, approach, defenderArea, isReversed);
         }
     }
 
     /// <summary>
-    /// Freshly spawned Sosig, give it a role straight away
+    /// Freshly spawned Sosig: attackers join a squad, defenders get a role straight away
     /// </summary>
     public void OrderNew(Sosig s, Rush_CapturePoint objective, TGM_Area defenderArea, bool isReversed)
     {
+        if (s.GetIFF() == redIFF)
+        {
+            //Hold at the spawn while the rest of the wave forms up
+            CommandSosig(s, s.transform.position, false, false);
+            JoinSquad(s);
+            return;
+        }
+
         Vector3 mcom = objective.transform.position;
-        Order(s, s.GetIFF(), mcom, GetPhase(objective), GetApproachDirection(mcom), defenderArea, isReversed);
+        OrderDefender(s, mcom, GetPhase(objective), GetApproachDirection(mcom), defenderArea, isReversed);
     }
 
     static Phase GetPhase(Rush_CapturePoint objective)
@@ -181,17 +232,21 @@ public class TGM_RushAI
         //Old operator goes back to normal fighting and gets a new role next tick
         if (previous != null)
         {
-            float range;
-            if (defaultPushRange.TryGetValue(previous, out range))
-                previous.m_assaultPointOverridesSkirmishPointWhenFurtherThan = range;
-            if (defaultHearing.TryGetValue(previous, out range))
-                previous.MaxHearingRange = range;
+            float value;
+            if (defaultPushRange.TryGetValue(previous, out value))
+                previous.m_assaultPointOverridesSkirmishPointWhenFurtherThan = value;
+            if (defaultHearing.TryGetValue(previous, out value))
+                previous.MaxHearingRange = value;
             nextOrder.Remove(previous);
         }
 
         operators[iff] = s;
         if (s == null)
             return;
+
+        //The operator leaves its squad, it only works the Mcom now
+        for (int i = 0; i < squads.Count; i++)
+            squads[i].members.Remove(s);
 
         //Keep pushing to the Mcom even while fighting
         if (!defaultPushRange.ContainsKey(s))
@@ -216,7 +271,7 @@ public class TGM_RushAI
                 && Vector3.Distance(s.GetGuardPoint(), mcom) <= onPointRadius;
             if (!holding)
             {
-                s.CommandGuardPoint(SampleNavMesh(RandomRing(mcom, 0, 1)), true);
+                s.CommandGuardPoint(TGM_Tactics.SampleNavMesh(TGM_Tactics.RandomRing(mcom, 0, 1)), true);
                 s.FallbackOrder = Sosig.SosigOrder.GuardPoint;
             }
         }
@@ -227,86 +282,233 @@ public class TGM_RushAI
             if (!pushing)
             {
                 s.SetAssaultSpeed(Sosig.SosigMoveSpeed.Running);
-                s.CommandAssaultPoint(SampleNavMesh(RandomRing(mcom, 0, 1)));
+                s.CommandAssaultPoint(TGM_Tactics.SampleNavMesh(TGM_Tactics.RandomRing(mcom, 0, 1)));
                 s.FallbackOrder = Sosig.SosigOrder.Assault;
             }
         }
     }
 
     //------------------------------------------------------------------------------
-    // Roles
+    // Attacker squads
     //------------------------------------------------------------------------------
 
-    void Order(Sosig s, int iff, Vector3 mcom, Phase phase, Vector3 approach, TGM_Area defenderArea, bool isReversed)
+    void JoinSquad(Sosig s)
     {
-        if (s == null || s.BodyState == Sosig.SosigBodyState.Dead || s == operators[iff % operators.Length])
-            return;
-
-        //Stagger re-orders so the teams don't move in lockstep
-        nextOrder[s] = Time.time + Random.Range(reorderMin, reorderMax);
-        float roll = Random.value;
-
-        if (iff == redIFF)
+        //Sosigs from the same respawn wave form squads together
+        Squad forming = squads.Count > 0 ? squads[squads.Count - 1] : null;
+        if (forming == null
+            || forming.members.Count >= squadSize
+            || Time.time - forming.formedAt > squadFormWindow)
         {
-            //ATTACKERS
-            if (phase == Phase.Armed)
+            forming = new Squad
             {
-                if (roll < redGuardArmedChance)
-                    CommandSosig(s, RandomRing(mcom, 5, 15), false, true);              //Spread around it, protect the operator
-                else
-                    CommandSosig(s, AlongApproach(mcom, -approach, 12, 25, 12), true, false);  //Hunt defenders coming in
-            }
-            else if (roll < redEscortChance)
+                role = roleCycle[nextRoleIndex++ % roleCycle.Length],
+                formedAt = Time.time,
+            };
+            squads.Add(forming);
+        }
+        forming.members.Add(s);
+        forming.hasTarget = false;  //Plan with the full squad
+    }
+
+    void UpdateSquads(Vector3 mcom, Phase phase, bool phaseChanged, Vector3 approach, TGM_Area defenderArea, bool isReversed)
+    {
+        //Anyone not in a squad (e.g. an operator that was released) joins one
+        List<Sosig> attackers = TGM_Manager.instance.team[redIFF].sosigs;
+        for (int i = 0; i < attackers.Count; i++)
+        {
+            if (attackers[i] != operators[redIFF] && !InSquad(attackers[i]))
+                JoinSquad(attackers[i]);
+        }
+
+        for (int i = squads.Count - 1; i >= 0; i--)
+        {
+            Squad squad = squads[i];
+            squad.members.RemoveAll(s => s == null || s.BodyState == Sosig.SosigBodyState.Dead || s == operators[redIFF]);
+            if (squad.members.Count == 0)
             {
-                //Escort the operator from the approach side, dig in once arming starts
-                Vector3 point = RandomArc(mcom, approach, 110, 5, 12);
-                if (phase == Phase.Arming)
-                    CommandSosig(s, point, false, true);
-                else
-                    CommandSosig(s, point, true, false);
+                squads.RemoveAt(i);
+                continue;
             }
-            else if (roll < redEscortChance + redFlankChance && defenderArea != null)
-            {
-                List<Vector3> area = defenderArea.GetRandomAttackArea(isReversed);
-                CommandSosig(s, area[0], true, false);
-            }
+
+            //Still forming, wait for the rest of the wave
+            if (Time.time - squad.formedAt < squadFormWindow)
+                continue;
+
+            if (!squad.hasTarget || phaseChanged || Time.time >= squad.nextReplan)
+                PlanSquad(squad, mcom, phase, approach, defenderArea, isReversed);
+
+            UpdateBound(squad, mcom, phase, approach);
+        }
+    }
+
+    bool InSquad(Sosig s)
+    {
+        for (int i = 0; i < squads.Count; i++)
+        {
+            if (squads[i].members.Contains(s))
+                return true;
+        }
+        return false;
+    }
+
+    void PlanSquad(Squad squad, Vector3 mcom, Phase phase, Vector3 approach, TGM_Area defenderArea, bool isReversed)
+    {
+        Vector3 target;
+        if (phase == Phase.Armed)
+        {
+            //Defend the armed Mcom, overwatch stays further back on the approach
+            if (squad.role == SquadRole.Overwatch)
+                target = TGM_Tactics.AlongDirection(mcom, approach, 15, 25, 10);
             else
-            {
-                CommandSosig(s, AlongApproach(mcom, approach, 12, 25, 12), true, false);
-            }
+                target = TGM_Tactics.RandomRing(mcom, 6, 14);
         }
         else
         {
-            //DEFENDERS
-            bool contested = phase != Phase.Idle;
-            bool inRange = Vector3.Distance(s.transform.position, mcom) <= blueReactRange;
+            switch (squad.role)
+            {
+                case SquadRole.Flank:
+                    if (defenderArea != null)
+                        target = defenderArea.GetRandomAttackArea(isReversed)[0];
+                    else
+                    {
+                        Vector3 side = Vector3.Cross(Vector3.up, approach) * (Random.value < 0.5f ? -1 : 1);
+                        target = mcom + side * Random.Range(15f, 25f) + approach * 8;
+                    }
+                    break;
+                case SquadRole.Overwatch:
+                    target = TGM_Tactics.AlongDirection(mcom, approach, 20, 35, 10);
+                    break;
+                default:
+                    //Escort the operator in from the approach side
+                    target = TGM_Tactics.RandomArc(mcom, approach, 120, 6, 12);
+                    break;
+            }
+        }
 
-            if (contested && inRange)
+        squad.target = TGM_Tactics.SampleNavMesh(target);
+        squad.front = Centroid(squad);
+        squad.hasTarget = true;
+        squad.arrived = false;
+        squad.nextReplan = Time.time + Random.Range(squadReplanMin, squadReplanMax);
+        squad.boundStarted = -boundTimeout;   //Start the first bound on this tick
+    }
+
+    /// <summary>
+    /// Leap-frog: one half moves up while the other holds and covers, then they swap
+    /// </summary>
+    void UpdateBound(Squad squad, Vector3 mcom, Phase phase, Vector3 approach)
+    {
+        if (squad.arrived)
+            return;
+
+        //Threat is towards the Mcom while attacking, from the defenders' side once armed
+        Vector3 threat = phase == Phase.Armed ? -approach : TGM_Tactics.Flatten(mcom - Centroid(squad));
+        bool contested = phase != Phase.Idle;
+
+        //Wait for the movers to get to their spots (or give up waiting)
+        if (Time.time - squad.boundStarted < boundTimeout && !MoversArrived(squad))
+            return;
+
+        //Whole squad reached the target, settle into cover around it
+        if (Vector3.Distance(squad.front, squad.target) < 1)
+        {
+            squad.arrived = true;
+            for (int i = 0; i < squad.members.Count; i++)
             {
-                if (roll < blueResponderChance)
-                    CommandSosig(s, RandomRing(mcom, 3, 7), false, true);       //Close in and fight
-                else
-                    CommandSosig(s, RandomRing(mcom, 10, 22), false, true);     //Overwatch, cover the responders
+                Vector3 spot = TGM_Tactics.FindCover(squad.target, threat, coverSearchRadius + 2);
+                CommandSosig(squad.members[i], spot, false, contested);
+                squad.spots[squad.members[i]] = spot;
             }
-            else if (roll < blueForwardChance)
+            return;
+        }
+
+        //Next bound: swap halves and move the new movers up
+        squad.movingHalf ^= 1;
+        squad.front = Vector3.MoveTowards(squad.front, squad.target, boundStep);
+        squad.boundStarted = Time.time;
+
+        for (int i = 0; i < squad.members.Count; i++)
+        {
+            Sosig s = squad.members[i];
+            bool moving = (i % 2 == squad.movingHalf) || squad.members.Count == 1;
+            if (moving)
             {
-                CommandSosig(s, AlongApproach(mcom, approach, 25, 50, 15), false, false);
-            }
-            else if (roll < blueForwardChance + blueLaneChance && defenderArea != null)
-            {
-                List<Vector3> area = defenderArea.GetRandomDefendArea(isReversed);
-                CommandSosig(s, area[0], false, false);
-            }
-            else if (roll < blueForwardChance + blueLaneChance + blueOverwatchChance)
-            {
-                CommandSosig(s, RandomRing(mcom, 10, 25), false, false);
+                Vector3 spot = TGM_Tactics.FindCover(squad.front, threat, coverSearchRadius);
+                CommandSosig(s, spot, true, false);
+                squad.spots[s] = spot;
             }
             else
             {
-                CommandSosig(s, RandomRing(mcom, 5, 9), false, false);
+                //Hold here in the nearest cover and cover the movers
+                Vector3 spot = TGM_Tactics.FindCover(s.transform.position, threat, 2);
+                CommandSosig(s, spot, false, contested);
+                squad.spots.Remove(s);
             }
         }
     }
+
+    bool MoversArrived(Squad squad)
+    {
+        for (int i = 0; i < squad.members.Count; i++)
+        {
+            Vector3 spot;
+            if (squad.spots.TryGetValue(squad.members[i], out spot)
+                && Vector3.Distance(squad.members[i].transform.position, spot) > boundArriveDistance)
+                return false;
+        }
+        return true;
+    }
+
+    static Vector3 Centroid(Squad squad)
+    {
+        Vector3 sum = Vector3.zero;
+        for (int i = 0; i < squad.members.Count; i++)
+            sum += squad.members[i].transform.position;
+        return sum / Mathf.Max(squad.members.Count, 1);
+    }
+
+    //------------------------------------------------------------------------------
+    // Defenders
+    //------------------------------------------------------------------------------
+
+    void OrderDefender(Sosig s, Vector3 mcom, Phase phase, Vector3 approach, TGM_Area defenderArea, bool isReversed)
+    {
+        if (s == null || s.BodyState == Sosig.SosigBodyState.Dead || s == operators[blueIFF])
+            return;
+
+        //Stagger re-orders so the team doesn't move in lockstep
+        nextOrder[s] = Time.time + Random.Range(blueReorderMin, blueReorderMax);
+        float roll = Random.value;
+        bool contested = phase != Phase.Idle;
+        bool inRange = Vector3.Distance(s.transform.position, mcom) <= blueReactRange;
+
+        Vector3 point;
+        bool hardGuard = false;
+        if (contested && inRange)
+        {
+            hardGuard = true;
+            if (roll < blueResponderChance)
+                point = TGM_Tactics.RandomRing(mcom, 3, 7);     //Close in and fight
+            else
+                point = TGM_Tactics.RandomRing(mcom, 10, 22);   //Overwatch, cover the responders
+        }
+        else if (roll < blueForwardChance)
+            point = TGM_Tactics.AlongDirection(mcom, approach, 25, 50, 15);
+        else if (roll < blueForwardChance + blueLaneChance && defenderArea != null)
+            point = defenderArea.GetRandomDefendArea(isReversed)[0];
+        else if (roll < blueForwardChance + blueLaneChance + blueOverwatchChance)
+            point = TGM_Tactics.RandomRing(mcom, 10, 25);
+        else
+            point = TGM_Tactics.RandomRing(mcom, 5, 9);
+
+        //Attackers come from the approach direction
+        CommandSosig(s, TGM_Tactics.FindCover(point, approach, coverSearchRadius), false, hardGuard);
+    }
+
+    //------------------------------------------------------------------------------
+    // Shared
+    //------------------------------------------------------------------------------
 
     /// <summary>
     /// Assault pushes hard to the point, guard holds the point but still engages enemies.
@@ -314,7 +516,10 @@ public class TGM_RushAI
     /// </summary>
     static void CommandSosig(Sosig s, Vector3 point, bool assault, bool hardGuard)
     {
-        point = SampleNavMesh(point);
+        if (s == null || s.BodyState == Sosig.SosigBodyState.Dead)
+            return;
+
+        point = TGM_Tactics.SampleNavMesh(point);
 
         //Already fighting, keep fighting and head here once it's over
         if (s.CurrentOrder == Sosig.SosigOrder.Skirmish)
@@ -340,10 +545,6 @@ public class TGM_RushAI
         }
     }
 
-    //------------------------------------------------------------------------------
-    // Positions
-    //------------------------------------------------------------------------------
-
     /// <summary>
     /// Flat direction from the Mcom towards the attackers' spawn
     /// </summary>
@@ -352,47 +553,12 @@ public class TGM_RushAI
         TGM_Area redSpawn = TGM_Manager.instance.team[redIFF].currentSpawnArea;
         if (redSpawn != null)
         {
-            Vector3 dir = redSpawn.transform.position - mcom;
-            dir.y = 0;
-            if (dir.sqrMagnitude > 1)
-                return dir.normalized;
+            Vector3 dir = TGM_Tactics.Flatten(redSpawn.transform.position - mcom);
+            if (dir != Vector3.zero)
+                return dir;
         }
         Vector2 random = Random.insideUnitCircle.normalized;
         return new Vector3(random.x, 0, random.y);
-    }
-
-    /// <summary>
-    /// A point out from the Mcom along a direction, with some sideways spread
-    /// </summary>
-    static Vector3 AlongApproach(Vector3 mcom, Vector3 direction, float minDistance, float maxDistance, float lateral)
-    {
-        Vector3 side = Vector3.Cross(Vector3.up, direction);
-        return mcom
-            + direction * Random.Range(minDistance, maxDistance)
-            + side * Random.Range(-lateral, lateral);
-    }
-
-    /// <summary>
-    /// A point in a ring around the Mcom, limited to an arc facing a direction
-    /// </summary>
-    static Vector3 RandomArc(Vector3 center, Vector3 facing, float arcDegrees, float minRadius, float maxRadius)
-    {
-        Vector3 dir = Quaternion.Euler(0, Random.Range(-arcDegrees / 2, arcDegrees / 2), 0) * facing;
-        return center + dir * Random.Range(minRadius, maxRadius);
-    }
-
-    static Vector3 RandomRing(Vector3 center, float minRadius, float maxRadius)
-    {
-        Vector2 dir = Random.insideUnitCircle.normalized;
-        return center + new Vector3(dir.x, 0, dir.y) * Random.Range(minRadius, maxRadius);
-    }
-
-    static Vector3 SampleNavMesh(Vector3 point)
-    {
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(point, out hit, 8, NavMesh.AllAreas))
-            return hit.position;
-        return point;
     }
 
     /// <summary>
@@ -403,6 +569,17 @@ public class TGM_RushAI
         RemoveDestroyed(nextOrder);
         RemoveDestroyed(defaultPushRange);
         RemoveDestroyed(defaultHearing);
+        for (int i = 0; i < squads.Count; i++)
+        {
+            List<Sosig> stale = new List<Sosig>();
+            foreach (Sosig s in squads[i].spots.Keys)
+            {
+                if (s == null)
+                    stale.Add(s);
+            }
+            for (int x = 0; x < stale.Count; x++)
+                squads[i].spots.Remove(stale[x]);
+        }
     }
 
     static void RemoveDestroyed(Dictionary<Sosig, float> dictionary)

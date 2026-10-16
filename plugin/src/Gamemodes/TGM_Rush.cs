@@ -90,7 +90,7 @@ public class TGM_Rush : TGM_Gamemode
 
         //Area Setup
         SetupAreas();
-        ai.Reset();
+        ai.ResetAll();   //New game, disband squads
 
         //Clear old Radios
         for (int i = 0; i < capturePoints.Count; i++)
