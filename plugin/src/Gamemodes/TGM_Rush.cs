@@ -90,6 +90,7 @@ public class TGM_Rush : TGM_Gamemode
 
         //Area Setup
         SetupAreas();
+        ai.Reset();
 
         //Clear old Radios
         for (int i = 0; i < capturePoints.Count; i++)
@@ -343,7 +344,7 @@ public class TGM_Rush : TGM_Gamemode
 
         Rush_CapturePoint objective = GetActiveObjective();
         if (objective != null)
-            OrderSosig(s, s.GetIFF(), objective);
+            ai.OrderNew(s, objective, TGM_Manager.instance.team[blueIFF].currentSpawnArea, isReversed);
     }
 
     public override void OnSosigKilled(Sosig s)
@@ -363,24 +364,12 @@ public class TGM_Rush : TGM_Gamemode
         //Set Player's Markers
         SetMarkers();
 
-        //Objective moved, give everyone new orders on the next AI tick
-        nextSosigOrder.Clear();
-        nextAIUpdate = 0;
+        //Objective moved, give everyone new orders and pick new operators
+        ai.Reset();
     }
 
-    //------------------------------------------------------------------------------
-    // Sosig AI (host only)
-    //------------------------------------------------------------------------------
-
-    const float attackerPushChance = 0.75f;   //Attackers heading for the Mcom, rest go to attack areas
-    const float defenderRingChance = 0.3f;    //Defenders holding near the Mcom when nothing is happening
-    const float defenderReactRange = 60;      //Defenders this close respond to the Mcom being armed
-    const float onPointRadius = 2.5f;         //Close enough to the Mcom to arm / disarm it
-    readonly Dictionary<Sosig, float> nextSosigOrder = new Dictionary<Sosig, float>();
-    readonly HashSet<Sosig> onPoint = new HashSet<Sosig>();                  //Sosigs that must get on the Mcom at all cost
-    readonly Dictionary<Sosig, float> defaultPushRange = new Dictionary<Sosig, float>();   //Original skirmish override range
-    float nextAIUpdate = 0;
-    bool lastContested = false;
+    //Sosig orders, host only (see TGM_RushAI)
+    readonly TGM_RushAI ai = new TGM_RushAI();
 
     Rush_CapturePoint GetActiveObjective()
     {
@@ -394,214 +383,9 @@ public class TGM_Rush : TGM_Gamemode
 
     void UpdateSosigAI()
     {
-        if (Time.time < nextAIUpdate)
-            return;
-        nextAIUpdate = Time.time + 1;
-
         Rush_CapturePoint objective = GetActiveObjective();
-        if (objective == null)
-            return;
-
-        //Arming started or stopped, everyone reacts straight away
-        bool contested = objective.state != Rush_CapturePoint.McomState.Idle;
-        bool reactNow = contested != lastContested;
-        lastContested = contested;
-
-        //Forget Sosigs that no longer exist
-        List<Sosig> stale = new List<Sosig>();
-        foreach (Sosig s in nextSosigOrder.Keys)
-        {
-            if (s == null)
-                stale.Add(s);
-        }
-        for (int i = 0; i < stale.Count; i++)
-        {
-            nextSosigOrder.Remove(stale[i]);
-            defaultPushRange.Remove(stale[i]);
-        }
-        onPoint.RemoveWhere(s => s == null);
-
-        Vector3 mcom = objective.transform.position;
-        for (int iff = 0; iff < TGM_Manager.instance.team.Length; iff++)
-        {
-            List<Sosig> sosigs = TGM_Manager.instance.team[iff].sosigs;
-
-            //Remove destroyed or dead Sosigs so they don't block respawns
-            sosigs.RemoveAll(s => s == null || s.BodyState == Sosig.SosigBodyState.Dead);
-
-            for (int i = 0; i < sosigs.Count; i++)
-            {
-                float next;
-                if (reactNow || !nextSosigOrder.TryGetValue(sosigs[i], out next) || Time.time >= next)
-                    OrderSosig(sosigs[i], iff, objective);
-                else if (onPoint.Contains(sosigs[i]))
-                    HoldMcom(sosigs[i], mcom); //Pull them back if they got distracted
-            }
-        }
-    }
-
-    void OrderSosig(Sosig s, int iff, Rush_CapturePoint objective)
-    {
-        //Stagger re-orders so the teams don't move in lockstep
-        nextSosigOrder[s] = Time.time + UnityEngine.Random.Range(10f, 20f);
-
-        Vector3 mcom = objective.transform.position;
-        bool armed = objective.state == Rush_CapturePoint.McomState.Armed
-            || objective.state == Rush_CapturePoint.McomState.Disarming;
-        bool contested = objective.state != Rush_CapturePoint.McomState.Idle;
-        float roll = UnityEngine.Random.value;
-
-        if (iff == redIFF)
-        {
-            //ATTACKERS
-            if (armed)
-            {
-                //Half sit on the armed Mcom so it can't be disarmed, rest hold close around it
-                if (roll < 0.5f)
-                    SendToMcom(s, mcom);
-                else
-                    CommandSosig(s, RandomRing(mcom, 3, 8), false, true);
-            }
-            else if (roll < attackerPushChance)
-            {
-                //Rush the Mcom and arm it
-                SendToMcom(s, mcom);
-            }
-            else
-            {
-                //Flank through the attack areas
-                List<Vector3> area = TGM_Manager.instance.team[blueIFF].currentSpawnArea.GetRandomAttackArea(isReversed);
-                CommandSosig(s, area[0], true, false);
-            }
-        }
-        else
-        {
-            //DEFENDERS
-            bool inRange = Vector3.Distance(s.transform.position, mcom) <= defenderReactRange;
-            if (contested && inRange)
-            {
-                //Get on the Mcom to stop / disarm it, the rest hold close around it
-                if (roll < 0.7f)
-                    SendToMcom(s, mcom);
-                else
-                    CommandSosig(s, RandomRing(mcom, 4, 10), false, true);
-            }
-            else if (roll < defenderRingChance)
-            {
-                //Hold near the Mcom without sitting on it
-                CommandSosig(s, RandomRing(mcom, 6, 15), false, false);
-            }
-            else
-            {
-                List<Vector3> area = TGM_Manager.instance.team[blueIFF].currentSpawnArea.GetRandomDefendArea(isReversed);
-                CommandSosig(s, area[0], false, false);
-            }
-        }
-    }
-
-    /// <summary>
-    /// This Sosig's job is the Mcom, it is held to it every AI tick until reassigned
-    /// </summary>
-    void SendToMcom(Sosig s, Vector3 mcom)
-    {
-        onPoint.Add(s);
-
-        //Keep pushing to the Mcom even while fighting
-        if (!defaultPushRange.ContainsKey(s))
-            defaultPushRange[s] = s.m_assaultPointOverridesSkirmishPointWhenFurtherThan;
-        s.m_assaultPointOverridesSkirmishPointWhenFurtherThan = 1;
-
-        HoldMcom(s, mcom);
-    }
-
-    /// <summary>
-    /// Run to the Mcom, once there hard guard it (stands on it, still shoots back, doesn't wander)
-    /// </summary>
-    static void HoldMcom(Sosig s, Vector3 mcom)
-    {
-        if (s == null || s.BodyState == Sosig.SosigBodyState.Dead)
-            return;
-
-        if (Vector3.Distance(s.transform.position, mcom) <= onPointRadius)
-        {
-            bool holding = s.CurrentOrder == Sosig.SosigOrder.GuardPoint
-                && s.m_hardGuard
-                && Vector3.Distance(s.GetGuardPoint(), mcom) <= onPointRadius;
-            if (!holding)
-            {
-                s.CommandGuardPoint(SampleNavMesh(RandomRing(mcom, 0, 1)), true);
-                s.FallbackOrder = Sosig.SosigOrder.GuardPoint;
-            }
-        }
-        else
-        {
-            bool pushing = s.CurrentOrder == Sosig.SosigOrder.Assault
-                && Vector3.Distance(s.m_assaultPoint, mcom) <= onPointRadius;
-            if (!pushing)
-            {
-                s.SetAssaultSpeed(Sosig.SosigMoveSpeed.Running);
-                s.CommandAssaultPoint(SampleNavMesh(RandomRing(mcom, 0, 1)));
-                s.FallbackOrder = Sosig.SosigOrder.Assault;
-            }
-        }
-    }
-
-    /// <summary>
-    /// Assault pushes hard to the point, guard holds the point but still engages enemies.
-    /// Hard guard keeps them at the point instead of wandering off to investigate noises.
-    /// </summary>
-    void CommandSosig(Sosig s, Vector3 point, bool assault, bool hardGuard)
-    {
-        if (s == null || s.BodyState == Sosig.SosigBodyState.Dead)
-            return;
-
-        //No longer an Mcom runner, restore normal fighting behaviour
-        if (onPoint.Remove(s))
-        {
-            float range;
-            if (defaultPushRange.TryGetValue(s, out range))
-                s.m_assaultPointOverridesSkirmishPointWhenFurtherThan = range;
-        }
-
-        point = SampleNavMesh(point);
-
-        //Already fighting, keep fighting and head here once it's over
-        if (s.CurrentOrder == Sosig.SosigOrder.Skirmish)
-        {
-            if (assault)
-                s.m_assaultPoint = point;
-            else
-                s.m_guardPoint = point;
-            s.FallbackOrder = assault ? Sosig.SosigOrder.Assault : Sosig.SosigOrder.GuardPoint;
-            return;
-        }
-
-        if (assault)
-        {
-            s.SetAssaultSpeed(Sosig.SosigMoveSpeed.Running);
-            s.CommandAssaultPoint(point);
-            s.FallbackOrder = Sosig.SosigOrder.Assault;
-        }
-        else
-        {
-            s.CommandGuardPoint(point, hardGuard);
-            s.FallbackOrder = Sosig.SosigOrder.GuardPoint;
-        }
-    }
-
-    static Vector3 SampleNavMesh(Vector3 point)
-    {
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(point, out hit, 4, NavMesh.AllAreas))
-            return hit.position;
-        return point;
-    }
-
-    static Vector3 RandomRing(Vector3 center, float minRadius, float maxRadius)
-    {
-        Vector2 dir = UnityEngine.Random.insideUnitCircle.normalized;
-        float radius = UnityEngine.Random.Range(minRadius, maxRadius);
-        return center + new Vector3(dir.x, 0, dir.y) * radius;
+        if (objective != null)
+            ai.Update(objective, TGM_Manager.instance.team[blueIFF].currentSpawnArea, isReversed);
     }
 
     void SetupAreas()

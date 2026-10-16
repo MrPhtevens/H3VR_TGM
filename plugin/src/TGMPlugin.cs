@@ -33,6 +33,9 @@ namespace TeamsGameMode
             //Invoke(nameof(DebugSceneLoad), 8);
 
             SceneManager.activeSceneChanged += ChangedActiveScene;
+
+            //Optional player supplied Mcom sounds
+            StartCoroutine(TGM_McomSounds.Load());
         }
 
 

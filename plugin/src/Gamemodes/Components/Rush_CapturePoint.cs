@@ -82,7 +82,9 @@ public class Rush_CapturePoint : MonoBehaviour
         //Arming sound, louder and audible from further away
         if (audioSource != null)
         {
-            AudioClip capturing = TGM_Scene.instance.audioCapturing != null ? TGM_Scene.instance.audioCapturing : TGM_Manager.instance.audioCapturing;
+            AudioClip capturing = TGM_McomSounds.arming;
+            if (capturing == null)
+                capturing = TGM_Scene.instance.audioCapturing != null ? TGM_Scene.instance.audioCapturing : TGM_Manager.instance.audioCapturing;
             if (capturing != null)
                 audioSource.clip = capturing;
             audioSource.loop = true;
@@ -98,7 +100,7 @@ public class Rush_CapturePoint : MonoBehaviour
         if (alarmClip == null)
             alarmClip = CreateAlarmClip();
         alarmSource = gameObject.AddComponent<AudioSource>();
-        alarmSource.clip = alarmClip;
+        alarmSource.clip = TGM_McomSounds.armed != null ? TGM_McomSounds.armed : alarmClip;
         alarmSource.loop = true;
         alarmSource.playOnAwake = false;
         alarmSource.spatialBlend = 1;
@@ -347,8 +349,10 @@ public class Rush_CapturePoint : MonoBehaviour
             {
                 if (!audioSource.isPlaying)
                     audioSource.Play();
-                audioSource.volume = Mathf.Lerp(0.5f, 1, captureCircle.fillAmount);
-                audioSource.pitch = Mathf.Lerp(audioPitchRange.x, audioPitchRange.y, captureCircle.fillAmount);
+                //Custom sounds play as recorded, the built in one ramps up
+                bool custom = TGM_McomSounds.arming != null;
+                audioSource.volume = custom ? 1 : Mathf.Lerp(0.5f, 1, captureCircle.fillAmount);
+                audioSource.pitch = custom ? 1 : Mathf.Lerp(audioPitchRange.x, audioPitchRange.y, captureCircle.fillAmount);
             }
         }
         else
@@ -365,7 +369,7 @@ public class Rush_CapturePoint : MonoBehaviour
         {
             if (!alarmSource.isPlaying)
                 alarmSource.Play();
-            alarmSource.pitch = Mathf.Lerp(1.6f, 1f, Mathf.InverseLerp(0, fuseTime, fuseRemaining));
+            alarmSource.pitch = TGM_McomSounds.armed != null ? 1 : Mathf.Lerp(1.6f, 1f, Mathf.InverseLerp(0, fuseTime, fuseRemaining));
         }
         else if (alarmSource.isPlaying)
             alarmSource.Stop();
@@ -383,10 +387,14 @@ public class Rush_CapturePoint : MonoBehaviour
     }
 
     /// <summary>
-    /// Spawns the M26 grenade explosion effect with all damage removed, purely visual and sound
+    /// Spawns the M26 grenade explosion effect, keeping only particles, lights and sound so nothing can be hurt
     /// </summary>
     static void SpawnExplosionEffect(Vector3 position)
     {
+        bool customSound = TGM_McomSounds.explosion != null;
+        if (customSound)
+            PlayExplosionSound(position);
+
         FVRObject grenadeObject;
         if (!IM.OD.TryGetValue("PinnedGrenadeM26", out grenadeObject) || grenadeObject.GetGameObject() == null)
         {
@@ -408,19 +416,37 @@ public class Rush_CapturePoint : MonoBehaviour
                 continue;
 
             GameObject fx = Instantiate(grenade.SpawnOnSplode[i], position + Vector3.up, Quaternion.identity, holder.transform);
-            foreach (Explosion explosion in fx.GetComponentsInChildren<Explosion>(true))
+
+            //Remove every script (damage, shrapnel, secondary spawns), keep the game's explosion sound unless we have our own
+            foreach (MonoBehaviour script in fx.GetComponentsInChildren<MonoBehaviour>(true))
             {
-                explosion.DoesRadiusDamage = false;
-                explosion.ShrapnelAmount = 0;
-                explosion.HasSecondaries = false;
-                explosion.ExplosiveForce = 0;
-                explosion.DoesIgnite = false;
-                explosion.CanGenerateRocketJump = false;
+                if (!customSound && script is ExplosionSound)
+                    continue;
+                DestroyImmediate(script);
             }
+            foreach (Collider collider in fx.GetComponentsInChildren<Collider>(true))
+                DestroyImmediate(collider);
+
             fx.transform.SetParent(null, true);
             fx.SetActive(true);
+            Destroy(fx, 10);    //Its own cleanup script was removed above
         }
         Destroy(holder);
+    }
+
+    static void PlayExplosionSound(Vector3 position)
+    {
+        GameObject soundObject = new GameObject("TGM_McomExplosionSound");
+        soundObject.transform.position = position;
+        AudioSource source = soundObject.AddComponent<AudioSource>();
+        source.clip = TGM_McomSounds.explosion;
+        source.spatialBlend = 1;
+        source.rolloffMode = AudioRolloffMode.Linear;
+        source.minDistance = 20;
+        source.maxDistance = 300;
+        source.volume = 1;
+        source.Play();
+        Destroy(soundObject, TGM_McomSounds.explosion.length + 0.5f);
     }
 
     public void CapturePoint()
