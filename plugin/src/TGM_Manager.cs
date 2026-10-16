@@ -166,6 +166,7 @@ public class TGM_Manager : MonoBehaviour
             gamemode.Update();
 
         TGM_AllyMarkers.Update();
+        TGM_AIDebug.Update();
 
         if (gameState == GameStateEnum.Gameplay)
         {

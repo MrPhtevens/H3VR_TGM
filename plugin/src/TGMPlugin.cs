@@ -23,6 +23,7 @@ namespace TeamsGameMode
         {
             instance = this;
             Logger = base.Logger;
+            TGM_Config.Bind(Config);
 
             AtlasPlugin.Loaders["teamsgamemode"] = new SandboxLoader();
 

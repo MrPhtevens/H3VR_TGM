@@ -19,6 +19,7 @@ public class Rush_CapturePoint : MonoBehaviour
     public bool canCapture = false;
 
     public float captureTotalTime = 5;  //Seconds to arm
+    static float armTime => TGM_Config.ArmTime.Value;  //Config overrides the prefab value
     public Image captureCircle;
     public GameObject capturedPrefab;
     [HideInInspector]
@@ -30,8 +31,8 @@ public class Rush_CapturePoint : MonoBehaviour
     //Set by TGM_Rush when spawned
     [HideInInspector] public int pointIndex = -1;
 
-    public const float fuseTime = 25;       //Seconds from armed to explosion
-    public const float disarmTotalTime = 5; //Seconds defenders need to disarm
+    public static float fuseTime => TGM_Config.FuseTime.Value;          //Seconds from armed to explosion
+    public static float disarmTotalTime => TGM_Config.DisarmTime.Value; //Seconds defenders need to disarm
     const float sendInterval = 0.2f;        //Host state sync rate
     const float presenceTimeout = 2.5f;     //Remote hands expire if not refreshed
 
@@ -191,8 +192,8 @@ public class Rush_CapturePoint : MonoBehaviour
             case McomState.Arming:
                 if (attackers)
                 {
-                    progress = Mathf.Min(progress + dt, captureTotalTime);
-                    if (progress >= captureTotalTime)
+                    progress = Mathf.Min(progress + dt, armTime);
+                    if (progress >= armTime)
                     {
                         SetState(McomState.Armed, 0, fuseTime);
                         return;
@@ -362,7 +363,7 @@ public class Rush_CapturePoint : MonoBehaviour
 
         if (showCircle)
         {
-            float total = state == McomState.Arming ? captureTotalTime : disarmTotalTime;
+            float total = state == McomState.Arming ? armTime : disarmTotalTime;
             captureCircle.gameObject.SetActive(true);
             captureCircle.transform.parent.LookAt(GM.CurrentPlayerBody.Head.position);
             captureCircle.fillAmount = Mathf.InverseLerp(0, total, progress);

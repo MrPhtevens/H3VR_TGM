@@ -22,30 +22,30 @@ public class TGM_RushAI
     const float tickInterval = 1;               //How often orders are checked
     const float operatorCheckInterval = 0.25f;  //Operators are kept on task more often than everyone else
     const float onPointRadius = 2.5f;           //Close enough to the Mcom to arm / disarm it
-    const float coverSearchRadius = 4;          //How far from a chosen spot to look for cover
+    static float coverSearchRadius => TGM_Config.CoverSearchRadius.Value;          //How far from a chosen spot to look for cover
 
     //Attacker squads
-    const int squadSize = 4;                    //Max Sosigs per squad
-    const float squadFormWindow = 2;            //Sosigs spawned within this many seconds join the same squad
-    const float boundStep = 20;                 //How far the moving half advances per bound
-    const float boundTimeout = 6;               //Swap halves after this long even if the movers haven't arrived
-    const float boundArriveDistance = 5;        //Movers count as arrived this close to their spot
-    const float boundZone = 45;                 //Squads always leap-frog this close to the Mcom
-    const float contactMemory = 8;              //Squads keep leap-frogging this long after their last fight
-    const float travelStep = 30;                //Out of contact, squads run towards a waypoint this far ahead
-    const float travelSpacing = 3;              //Sideways gap between squad members while travelling
-    const float operatorCommitRange = 30;       //Red's operator goes for the Mcom once a squad (or it) is this close
-    const float squadReplanMin = 25;            //Squads pick a new target every replanMin-replanMax seconds
-    const float squadReplanMax = 40;
+    static int squadSize => TGM_Config.SquadSize.Value;                    //Max Sosigs per squad
+    static float squadFormWindow => TGM_Config.SquadFormWindow.Value;            //Sosigs spawned within this many seconds join the same squad
+    static float boundStep => TGM_Config.BoundStep.Value;                 //How far the moving half advances per bound
+    static float boundTimeout => TGM_Config.BoundTimeout.Value;               //Swap halves after this long even if the movers haven't arrived
+    static float boundArriveDistance => TGM_Config.BoundArriveDistance.Value;        //Movers count as arrived this close to their spot
+    static float boundZone => TGM_Config.BoundZone.Value;                 //Squads always leap-frog this close to the Mcom
+    static float contactMemory => TGM_Config.ContactMemory.Value;              //Squads keep leap-frogging this long after their last fight
+    static float travelStep => TGM_Config.TravelStep.Value;                //Out of contact, squads run towards a waypoint this far ahead
+    static float travelSpacing => TGM_Config.TravelSpacing.Value;              //Sideways gap between squad members while travelling
+    static float operatorCommitRange => TGM_Config.OperatorCommitRange.Value;       //Red's operator goes for the Mcom once a squad (or it) is this close
+    static float squadReplanMin => TGM_Config.SquadReplanMin.Value;            //Squads pick a new target every replanMin-replanMax seconds
+    static float squadReplanMax => TGM_Config.SquadReplanMax.Value;
 
     //Defenders
-    const float blueReorderMin = 15;            //Defenders get new orders every reorderMin-reorderMax seconds
-    const float blueReorderMax = 30;
-    const float blueForwardChance = 0.3f;       //Meet the attack on the approach
-    const float blueLaneChance = 0.3f;          //The map's defend areas
-    const float blueOverwatchChance = 0.25f;    //Ring at mid range around the Mcom (rest anchor near it)
-    const float blueReactRange = 60;            //Defenders this close react when the Mcom is contested
-    const float blueResponderChance = 0.35f;    //Close in and fight, rest hold an overwatch ring
+    static float blueReorderMin => TGM_Config.DefenderReorderMin.Value;            //Defenders get new orders every reorderMin-reorderMax seconds
+    static float blueReorderMax => TGM_Config.DefenderReorderMax.Value;
+    static float blueForwardChance => TGM_Config.DefenderForwardChance.Value;       //Meet the attack on the approach
+    static float blueLaneChance => TGM_Config.DefenderLaneChance.Value;          //The map's defend areas
+    static float blueOverwatchChance => TGM_Config.DefenderOverwatchChance.Value;    //Ring at mid range around the Mcom (rest anchor near it)
+    static float blueReactRange => TGM_Config.DefenderReactRange.Value;            //Defenders this close react when the Mcom is contested
+    static float blueResponderChance => TGM_Config.DefenderResponderChance.Value;    //Close in and fight, rest hold an overwatch ring
 
     //------------------------------------------------------------------------------
 
@@ -56,6 +56,7 @@ public class TGM_RushAI
     class Squad
     {
         public readonly List<Sosig> members = new List<Sosig>();
+        public int id;              //For the debug labels
         public SquadRole role;
         public float formedAt;
         public bool hasTarget;
@@ -176,7 +177,7 @@ public class TGM_RushAI
         if (s.GetIFF() == redIFF)
         {
             //Hold at the spawn while the rest of the wave forms up
-            CommandSosig(s, s.transform.position, false, false);
+            CommandSosig(s, s.transform.position, false, false, "Red\nforming squad");
             JoinSquad(s);
             return;
         }
@@ -303,6 +304,8 @@ public class TGM_RushAI
 
         //Stay with the escort squad
         Vector3 follow = Centroid(escort);
+        if (TGM_AIDebug.Enabled)
+            TGM_AIDebug.Show(s, "Red OPERATOR\nwaiting with squad " + escort.id, TGM_AIDebug.OperatorColor, follow);
         bool following = s.CurrentOrder == Sosig.SosigOrder.Assault
             && Vector3.Distance(s.m_assaultPoint, follow) < 8;
         if (!following)
@@ -318,7 +321,15 @@ public class TGM_RushAI
     /// </summary>
     static void HoldMcom(Sosig s, Vector3 mcom)
     {
-        if (Vector3.Distance(s.transform.position, mcom) <= onPointRadius)
+        bool onMcom = Vector3.Distance(s.transform.position, mcom) <= onPointRadius;
+        if (TGM_AIDebug.Enabled)
+        {
+            string team = s.GetIFF() == redIFF ? "Red OPERATOR\n" : "Blue OPERATOR\n";
+            string job = s.GetIFF() == redIFF ? "arming / holding Mcom" : "disarming Mcom";
+            TGM_AIDebug.Show(s, team + (onMcom ? job : "running to Mcom"), TGM_AIDebug.OperatorColor, mcom);
+        }
+
+        if (onMcom)
         {
             bool holding = s.CurrentOrder == Sosig.SosigOrder.GuardPoint
                 && s.m_hardGuard
@@ -356,6 +367,7 @@ public class TGM_RushAI
         {
             forming = new Squad
             {
+                id = nextRoleIndex + 1,
                 role = roleCycle[nextRoleIndex++ % roleCycle.Length],
                 formedAt = Time.time,
             };
@@ -511,7 +523,9 @@ public class TGM_RushAI
                 && Vector3.Distance(s.m_assaultPoint, point) < 10
                 && Vector3.Distance(s.transform.position, s.m_assaultPoint) > 8;
             if (!onTheWay)
-                CommandSosig(s, point, true, false);
+                CommandSosig(s, point, true, false, SquadLabel(squad, "travelling"));
+            else
+                ShowDebug(s, SquadLabel(squad, "travelling") + "\nassault", s.m_assaultPoint);
         }
         squad.spots.Clear();
     }
@@ -525,7 +539,7 @@ public class TGM_RushAI
         for (int i = 0; i < squad.members.Count; i++)
         {
             Vector3 spot = TGM_Tactics.FindCover(squad.target, threat, coverSearchRadius + 2);
-            CommandSosig(squad.members[i], spot, false, contested);
+            CommandSosig(squad.members[i], spot, false, contested, SquadLabel(squad, "arrived"));
             squad.spots[squad.members[i]] = spot;
         }
     }
@@ -572,14 +586,14 @@ public class TGM_RushAI
             if (moving)
             {
                 Vector3 spot = TGM_Tactics.FindCover(squad.front, threat, coverSearchRadius);
-                CommandSosig(s, spot, true, false);
+                CommandSosig(s, spot, true, false, SquadLabel(squad, "leap-frog: moving"));
                 squad.spots[s] = spot;
             }
             else
             {
                 //Hold here in the nearest cover and cover the movers
                 Vector3 spot = TGM_Tactics.FindCover(s.transform.position, threat, 2);
-                CommandSosig(s, spot, false, contested);
+                CommandSosig(s, spot, false, contested, SquadLabel(squad, "leap-frog: covering"));
                 squad.spots.Remove(s);
             }
         }
@@ -621,45 +635,85 @@ public class TGM_RushAI
         bool inRange = Vector3.Distance(s.transform.position, mcom) <= blueReactRange;
 
         Vector3 point;
+        string role;
         bool hardGuard = false;
         if (contested && inRange)
         {
             hardGuard = true;
             if (roll < blueResponderChance)
+            {
                 point = TGM_Tactics.RandomRing(mcom, 3, 7);     //Close in and fight
+                role = "Responder";
+            }
             else
+            {
                 point = TGM_Tactics.RandomRing(mcom, 10, 22);   //Overwatch, cover the responders
+                role = "Cover ring";
+            }
         }
         else if (roll < blueForwardChance)
+        {
             point = TGM_Tactics.AlongDirection(mcom, approach, 25, 50, 15);
+            role = "Forward";
+        }
         else if (roll < blueForwardChance + blueLaneChance && defenderArea != null)
+        {
             point = defenderArea.GetRandomDefendArea(isReversed)[0];
+            role = "Lane";
+        }
         else if (roll < blueForwardChance + blueLaneChance + blueOverwatchChance)
+        {
             point = TGM_Tactics.RandomRing(mcom, 10, 25);
+            role = "Overwatch";
+        }
         else
+        {
             point = TGM_Tactics.RandomRing(mcom, 5, 9);
+            role = "Anchor";
+        }
 
         //Attackers come from the approach direction
-        CommandSosig(s, TGM_Tactics.FindCover(point, approach, coverSearchRadius), false, hardGuard);
+        CommandSosig(s, TGM_Tactics.FindCover(point, approach, coverSearchRadius), false, hardGuard, "Blue " + role);
     }
 
     //------------------------------------------------------------------------------
     // Shared
     //------------------------------------------------------------------------------
 
+    static void ShowDebug(Sosig s, string text, Vector3 target)
+    {
+        if (!TGM_AIDebug.Enabled)
+            return;
+        Color color = s.GetIFF() == redIFF ? TGM_AIDebug.AttackColor : TGM_AIDebug.DefendColor;
+        TGM_AIDebug.Show(s, text, color, target);
+    }
+
+    static string SquadLabel(Squad squad, string mode)
+    {
+        return "Red squad " + squad.id + " " + squad.role + " (" + squad.members.Count + ")\n" + mode;
+    }
+
     /// <summary>
     /// Assault pushes hard to the point, guard holds the point but still engages enemies.
     /// Hard guard keeps them at the point instead of wandering off to investigate noises.
     /// </summary>
-    static void CommandSosig(Sosig s, Vector3 point, bool assault, bool hardGuard)
+    static void CommandSosig(Sosig s, Vector3 point, bool assault, bool hardGuard, string debug = null)
     {
         if (s == null || s.BodyState == Sosig.SosigBodyState.Dead)
             return;
 
         point = TGM_Tactics.SampleNavMesh(point);
+        bool fighting = s.CurrentOrder == Sosig.SosigOrder.Skirmish;
+
+        if (debug != null)
+        {
+            string action = fighting ? "fighting, then " : "";
+            action += assault ? "assault" : (hardGuard ? "hold (hard)" : "hold");
+            ShowDebug(s, debug + "\n" + action, point);
+        }
 
         //Already fighting, keep fighting and head here once it's over
-        if (s.CurrentOrder == Sosig.SosigOrder.Skirmish)
+        if (fighting)
         {
             if (assault)
                 s.m_assaultPoint = point;
