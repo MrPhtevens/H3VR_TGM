@@ -165,6 +165,8 @@ public class TGM_Manager : MonoBehaviour
         if(gamemode != null)
             gamemode.Update();
 
+        TGM_AllyMarkers.Update();
+
         if (gameState == GameStateEnum.Gameplay)
         {
             //Catch any Sosigs that have fallen out of the map
@@ -330,6 +332,7 @@ public class TGM_Manager : MonoBehaviour
     {
         //Stop any respawning
         instance.localPlayer.awaitingRespawn = false;
+        TGM_AllyMarkers.Clear();
 
         TGM_Scene.instance.playerResetPoint.SetPositionAndRotation(
             TGM_Scene.instance.defaultResetPosition,

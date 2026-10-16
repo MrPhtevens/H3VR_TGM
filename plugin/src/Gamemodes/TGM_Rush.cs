@@ -3,6 +3,7 @@ using FistVR;
 using UnityEngine;
 using H3MP.Networking;
 using System.Collections.Generic;
+using UnityEngine.AI;
 
 namespace TeamsGameMode;
 
@@ -10,8 +11,6 @@ namespace TeamsGameMode;
 public class TGM_Rush : TGM_Gamemode
 {
     List<Rush_CapturePoint> capturePoints = new List<Rush_CapturePoint>();
-    int captureRatio = 2;  //1 in X will go to attack positions (Rest goes to Objective)
-    int redSpawnRatio = 0;
     bool isReversed = false;
 
     public TGM_Rush(string modeName = "", string modeDescription = "", Sprite modeThumbnail = null)
@@ -72,12 +71,12 @@ public class TGM_Rush : TGM_Gamemode
         //H3MP
         if (Tools.ServerRunning())
         {
-            //Sync Rush data
+            //Sync Rush data (static receiver, the gamemode instance changes on every scene load)
             if (connectionRush == null)
             {
                 connectionRush = Tools.CreateCustomConnection("TGM_Rush");
-                connectionRush.ServerHandlerEvent += Rush_Receiver;
-                connectionRush.ClientHandlerEvent += Rush_Receiver;
+                connectionRush.ServerHandlerEvent += Rush_ServerReceiver;
+                connectionRush.ClientHandlerEvent += Rush_ClientReceiver;
             }
         }
     }
@@ -116,6 +115,7 @@ public class TGM_Rush : TGM_Gamemode
                     TGM_Scene.instance.areas[i].objective.position,
                     TGM_Scene.instance.areas[i].objective.rotation).GetComponent<Rush_CapturePoint>();
 
+                capturePoint.pointIndex = capturePoints.Count;  //Same order on host and clients
                 capturePoints.Add(capturePoint);
 
                 //Enable first capture Point
@@ -217,6 +217,7 @@ public class TGM_Rush : TGM_Gamemode
             }
         }
 
+        UpdateSosigAI();
         RespawnTime();
     }
 
@@ -340,29 +341,9 @@ public class TGM_Rush : TGM_Gamemode
     {
         base.OnSosigCreate(s);
 
-        int iff = s.GetIFF();
-
-        if (iff == blueIFF)
-        {
-            //Defenders
-            TGM_Sosigs.OrderSosigToLocations(s, TGM_Manager.instance.team[iff].currentSpawnArea.GetRandomDefendArea(isReversed));
-        }
-        else
-        {
-            //ATTACKERS
-            int enemyIFF = Global.GetEnemyIFF(s.GetIFF());
-            if (redSpawnRatio++ >= captureRatio)
-            {
-                //Move to attack positions
-                TGM_Sosigs.OrderSosigToLocations(s, TGM_Manager.instance.team[enemyIFF].currentSpawnArea.GetRandomAttackArea(isReversed));
-                redSpawnRatio = 0;
-            }
-            else
-            {
-                //Get on the objective!
-                TGM_Sosigs.OrderSosigToLocations(s, TGM_Manager.instance.team[enemyIFF].currentSpawnArea.GetObjectiveArea());
-            }
-        }
+        Rush_CapturePoint objective = GetActiveObjective();
+        if (objective != null)
+            OrderSosig(s, s.GetIFF(), objective);
     }
 
     public override void OnSosigKilled(Sosig s)
@@ -382,37 +363,175 @@ public class TGM_Rush : TGM_Gamemode
         //Set Player's Markers
         SetMarkers();
 
+        //Objective moved, give everyone new orders on the next AI tick
+        nextSosigOrder.Clear();
+        nextAIUpdate = 0;
+    }
+
+    //------------------------------------------------------------------------------
+    // Sosig AI (host only)
+    //------------------------------------------------------------------------------
+
+    const float attackerPushChance = 0.75f;   //Attackers heading for the Mcom, rest go to attack areas
+    const float defenderRingChance = 0.3f;    //Defenders holding near the Mcom when nothing is happening
+    const float defenderReactRange = 60;      //Defenders this close respond to the Mcom being armed
+    readonly Dictionary<Sosig, float> nextSosigOrder = new Dictionary<Sosig, float>();
+    float nextAIUpdate = 0;
+    bool lastContested = false;
+
+    Rush_CapturePoint GetActiveObjective()
+    {
+        for (int i = 0; i < capturePoints.Count; i++)
+        {
+            if (capturePoints[i] != null && capturePoints[i].canCapture)
+                return capturePoints[i];
+        }
+        return null;
+    }
+
+    void UpdateSosigAI()
+    {
+        if (Time.time < nextAIUpdate)
+            return;
+        nextAIUpdate = Time.time + 1;
+
+        Rush_CapturePoint objective = GetActiveObjective();
+        if (objective == null)
+            return;
+
+        //Arming started or stopped, everyone reacts straight away
+        bool contested = objective.state != Rush_CapturePoint.McomState.Idle;
+        bool reactNow = contested != lastContested;
+        lastContested = contested;
+
+        //Forget Sosigs that no longer exist
+        List<Sosig> stale = new List<Sosig>();
+        foreach (Sosig s in nextSosigOrder.Keys)
+        {
+            if (s == null)
+                stale.Add(s);
+        }
+        for (int i = 0; i < stale.Count; i++)
+            nextSosigOrder.Remove(stale[i]);
+
         for (int iff = 0; iff < TGM_Manager.instance.team.Length; iff++)
         {
-            for (int x = 0; x < TGM_Manager.instance.team[iff].sosigs.Count; x++)
-            {
-                if (TGM_Manager.instance.team[iff].sosigs == null)
-                    continue;
-                Sosig s = TGM_Manager.instance.team[iff].sosigs[x];
+            List<Sosig> sosigs = TGM_Manager.instance.team[iff].sosigs;
 
-                if (iff == blueIFF)
-                {
-                    //Blue Defenders
-                    TGM_Sosigs.OrderSosigToLocations(s, TGM_Manager.instance.team[iff].currentSpawnArea.GetRandomDefendArea(isReversed));
-                }
-                else
-                {
-                    //ATTACKERS
-                    int enemyIFF = Global.GetEnemyIFF(s.GetIFF());
-                    if (redSpawnRatio++ >= captureRatio)
-                    {
-                        //Move to attack positions
-                        TGM_Sosigs.OrderSosigToLocations(s, TGM_Manager.instance.team[enemyIFF].currentSpawnArea.GetRandomAttackArea(isReversed));
-                        redSpawnRatio = 0;
-                    }
-                    else
-                    {
-                        //Get on the objective!
-                        TGM_Sosigs.OrderSosigToLocations(s, TGM_Manager.instance.team[enemyIFF].currentSpawnArea.GetObjectiveArea());
-                    }
-                }
+            //Remove destroyed or dead Sosigs so they don't block respawns
+            sosigs.RemoveAll(s => s == null || s.BodyState == Sosig.SosigBodyState.Dead);
+
+            for (int i = 0; i < sosigs.Count; i++)
+            {
+                float next;
+                if (!reactNow && nextSosigOrder.TryGetValue(sosigs[i], out next) && Time.time < next)
+                    continue;
+
+                OrderSosig(sosigs[i], iff, objective);
             }
         }
+    }
+
+    void OrderSosig(Sosig s, int iff, Rush_CapturePoint objective)
+    {
+        //Stagger re-orders so the teams don't move in lockstep
+        nextSosigOrder[s] = Time.time + UnityEngine.Random.Range(10f, 20f);
+
+        Vector3 mcom = objective.transform.position;
+        bool armed = objective.state == Rush_CapturePoint.McomState.Armed
+            || objective.state == Rush_CapturePoint.McomState.Disarming;
+        bool contested = objective.state != Rush_CapturePoint.McomState.Idle;
+        float roll = UnityEngine.Random.value;
+
+        if (iff == redIFF)
+        {
+            //ATTACKERS
+            if (armed)
+            {
+                //Protect the armed Mcom, a few stay on it
+                if (roll < 0.35f)
+                    CommandSosig(s, RandomRing(mcom, 0, 2), true);
+                else
+                    CommandSosig(s, RandomRing(mcom, 3, 10), false);
+            }
+            else if (roll < attackerPushChance)
+            {
+                //Rush the Mcom and arm it
+                CommandSosig(s, RandomRing(mcom, 0, 2), true);
+            }
+            else
+            {
+                //Flank through the attack areas
+                List<Vector3> area = TGM_Manager.instance.team[blueIFF].currentSpawnArea.GetRandomAttackArea(isReversed);
+                CommandSosig(s, area[0], true);
+            }
+        }
+        else
+        {
+            //DEFENDERS
+            bool inRange = Vector3.Distance(s.transform.position, mcom) <= defenderReactRange;
+            if (contested && inRange)
+            {
+                //Get on the Mcom to stop / disarm it
+                if (roll < 0.7f)
+                    CommandSosig(s, RandomRing(mcom, 0, 2), true);
+                else
+                    CommandSosig(s, RandomRing(mcom, 4, 10), false);
+            }
+            else if (roll < defenderRingChance)
+            {
+                //Hold near the Mcom without sitting on it
+                CommandSosig(s, RandomRing(mcom, 6, 15), false);
+            }
+            else
+            {
+                List<Vector3> area = TGM_Manager.instance.team[blueIFF].currentSpawnArea.GetRandomDefendArea(isReversed);
+                CommandSosig(s, area[0], false);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Assault pushes hard to the point, guard holds the point but still engages enemies
+    /// </summary>
+    static void CommandSosig(Sosig s, Vector3 point, bool assault)
+    {
+        if (s == null || s.BodyState == Sosig.SosigBodyState.Dead)
+            return;
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(point, out hit, 4, NavMesh.AllAreas))
+            point = hit.position;
+
+        //Already fighting, keep fighting and head here once it's over
+        if (s.CurrentOrder == Sosig.SosigOrder.Skirmish)
+        {
+            if (assault)
+                s.m_assaultPoint = point;
+            else
+                s.m_guardPoint = point;
+            s.FallbackOrder = assault ? Sosig.SosigOrder.Assault : Sosig.SosigOrder.GuardPoint;
+            return;
+        }
+
+        if (assault)
+        {
+            s.SetAssaultSpeed(Sosig.SosigMoveSpeed.Running);
+            s.CommandAssaultPoint(point);
+            s.FallbackOrder = Sosig.SosigOrder.Assault;
+        }
+        else
+        {
+            s.CommandGuardPoint(point, false);
+            s.FallbackOrder = Sosig.SosigOrder.GuardPoint;
+        }
+    }
+
+    static Vector3 RandomRing(Vector3 center, float minRadius, float maxRadius)
+    {
+        Vector2 dir = UnityEngine.Random.insideUnitCircle.normalized;
+        float radius = UnityEngine.Random.Range(minRadius, maxRadius);
+        return center + new Vector3(dir.x, 0, dir.y) * radius;
     }
 
     void SetupAreas()
@@ -472,41 +591,69 @@ public class TGM_Rush : TGM_Gamemode
     public static CustomConnection connectionRush;
 
     //------------------------------------------------------------------------------
-    // Gameplay
+    // Mcom
     //------------------------------------------------------------------------------
 
-    void Rush_Receiver(int clientID, PacketData packet)
+    Rush_CapturePoint GetCapturePoint(int index)
     {
-        //Host doesn't get settings
-        if (!Tools.ServerRunning())
-            return;
-
-        if (Tools.IsHost())
-        {
-            //Apply Host Update
-        }
-        else
-        {
-            //Apply Client Update
-        }
+        if (index < 0 || index >= capturePoints.Count)
+            return null;
+        return capturePoints[index];
     }
 
-    public void Rush_ToServer()
+    //Host: a client's hands entered or left an Mcom
+    static void Rush_ServerReceiver(int clientID, PacketData packet)
     {
-        if (!Tools.ServerRunning())
+        if (!Tools.ServerRunning() || !Tools.IsHost())
+            return;
+
+        int index = packet.ReadInt();
+        int iff = packet.ReadInt();
+
+        TGM_Rush rush = TGM_Manager.instance.gamemode as TGM_Rush;
+        Rush_CapturePoint point = rush != null ? rush.GetCapturePoint(index) : null;
+        if (point != null)
+            point.ReceivePresence(clientID, iff);
+    }
+
+    //Client: Mcom state from the host
+    static void Rush_ClientReceiver(int clientID, PacketData packet)
+    {
+        if (!Tools.ServerRunning() || Tools.IsHost())
+            return;
+
+        int index = packet.ReadInt();
+        Rush_CapturePoint.McomState state = (Rush_CapturePoint.McomState)packet.ReadInt();
+        float progress = packet.ReadFloat();
+        float fuse = packet.ReadFloat();
+
+        TGM_Rush rush = TGM_Manager.instance.gamemode as TGM_Rush;
+        Rush_CapturePoint point = rush != null ? rush.GetCapturePoint(index) : null;
+        if (point != null)
+            point.ReceiveState(state, progress, fuse);
+    }
+
+    public void McomPresence_ToServer(int index, int iff)
+    {
+        if (!Tools.ServerRunning() || connectionRush == null)
             return;
 
         PacketData packet = new PacketData(connectionRush.ToServerID);
-
+        packet.Write(index);
+        packet.Write(iff);
         connectionRush.ClientToServer(packet);
     }
-    public void Rush_ToClients()
+
+    public void McomState_ToClients(int index, int state, float progress, float fuse)
     {
-        if (!Tools.ServerRunning())
+        if (!Tools.ServerRunning() || !Tools.IsHost() || connectionRush == null)
             return;
 
-        PacketData packet = new PacketData(connectionRush.ToServerID);
-
-        connectionRush.ClientToServer(packet);
+        PacketData packet = new PacketData(connectionRush.ToClientID);
+        packet.Write(index);
+        packet.Write(state);
+        packet.Write(progress);
+        packet.Write(fuse);
+        connectionRush.ServerToClients(packet);
     }
 }

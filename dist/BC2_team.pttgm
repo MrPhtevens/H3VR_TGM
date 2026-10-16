@@ -1,0 +1,7002 @@
+{
+    "name": "Bad Company 2",
+    "description": "Battlefield Bad Company 2 loudouts",
+    "playerClasses": [
+        {
+            "name": "",
+            "spriteName": "BC2_AEK971_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"AK12"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineAK12",
+							"cartridgeID": "545x39mmCartridgeAP"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": "45ACPCartridge+PFMJ"
+						},
+						{
+							"name": "Sight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexSRO2", "ScopeAcog4x32"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"GP25_Picatinny"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "Cartridge_40mmCaseless_HEF",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Cartridge_40mmCaseless_SMK"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M16_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M16A2"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineStanagUSGI30rnd",
+							"cartridgeID": "556x45mmCartridgeAP"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": "45ACPCartridge+PFMJ"
+						},
+						{
+							"name": "Holosight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexSRO2", "ScopeAcog4x32"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "AR15HandleRailFlat",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M203Classic"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "Cartridge_40x46Grenade_M381",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Cartridge_40x46Grenade_M651"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_AUG_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"AugA3"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineAugA3",
+							"cartridgeID": "556x45mmCartridgeAP"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": "45ACPCartridge+PFMJ"
+						},
+						{
+							"name": "Holosight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexSRO2", "ScopeAcog4x32"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M203Picatinny"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "Cartridge_40x46Grenade_M381",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Cartridge_40x46Grenade_M651"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_AN94_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"AN94Proto"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineAK74N",
+							"cartridgeID": "545x39mmCartridgeAP"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": "45ACPCartridge+PFMJ"
+						},
+						{
+							"name": "Sight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexKobra", "MagnifierPSO1"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"GP25_Classic"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "Cartridge_40mmCaseless_HEF",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Cartridge_40mmCaseless_SMK"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M416_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"H416"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineH416PMAG",
+							"cartridgeID": "556x45mmCartridgeAP"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": "45ACPCartridge+PFMJ"
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M203Picatinny"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "Cartridge_40x46Grenade_M381",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Holosight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexSRO2", "ScopeAcog4x32"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Cartridge_40x46Grenade_M651"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_9A91_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Dev_9A91"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "Dev_9A91Mag",
+							"cartridgeID": "9x39mmCartridgeAP"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"RPG7"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "RPG7Rocket",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorCBJ"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Sight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexKobra", "MagnifierPSO1"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": "45ACPCartridge+PFMJ"
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_UZI_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Uzi_Classic"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineMicroUzi32rnd",
+							"cartridgeID": "9x19mmCartridge+PFMJ"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"RPG7"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "RPG7Rocket",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorUzi"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": "45ACPCartridge+PFMJ"
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_PP2000_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PP2000"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazinePP2000",
+							"cartridgeID": "9x19mmCartridge+PFMJ"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"RPG7"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "RPG7Rocket",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Sight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexSRO2", "ScopeAcog4x32"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorPP2000"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": "45ACPCartridge+PFMJ"
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_UMP45_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"UMP45"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineUMP45",
+							"cartridgeID": "45ACPCartridge+PFMJ"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"RPG7"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "RPG7Rocket",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorCBJ"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Sight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexElevatedMRO", "ScopeAcog4x32"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": "45ACPCartridge+PFMJ"
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_AKS74U_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"AKS74U"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineAKS74U",
+							"cartridgeID": "545x39mmCartridgeAP"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"RPG7"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "RPG7Rocket",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Scope",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexKobra", "MagnifierPSO1"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorPBS4"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": "45ACPCartridge+PFMJ"
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_PKM_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PKM"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazinePKM",
+							"cartridgeID": "762x54mmRCartridgeAP"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": "45ACPCartridge+PFMJ"
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"IFAK_Skye"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M249_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M249"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM249Box",
+							"cartridgeID": "556x45mmCartridgeAP"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": "45ACPCartridge+PFMJ"
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"IFAK_Skye"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Sight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexElevatedMRO", "ScopeAcog4x32"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_MG36_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"G36"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineG36Drum",
+							"cartridgeID": "556x45mmCartridgeAP"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": "45ACPCartridge+PFMJ"
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"IFAK_Skye"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M60_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M60E4"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM60Box",
+							"cartridgeID": "762x51mmCartridgeAP"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": "45ACPCartridge+PFMJ"
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"IFAK_Skye"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Sight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexElevatedMRO", "ScopeAcog4x32"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_MG3_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"MG42"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineMG42Giant",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": "45ACPCartridge+PFMJ"
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"IFAK_Skye"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M24_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M24FO4"
+							],
+							"ammoCount": 5,
+							"ammoContainerID": "",
+							"cartridgeID": "762x51mmCartridgeAP"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M93R"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM93R",
+							"cartridgeID": "9x19mmCartridge+PFMJ"
+						},
+						{
+							"name": "Magnifier",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LeupoldScopePicatinny", "ScopeAcog4x32"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LaserActivatedClaymoreMine"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Attachment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"StockM93R"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Airstrike_Binocular"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_SV98_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SV98"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineSV98",
+							"cartridgeID": "762x54mmRCartridgeAP"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M93R"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM93R",
+							"cartridgeID": "9x19mmCartridge+PFMJ"
+						},
+						{
+							"name": "Magnifier",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Scope3-12x", "ScopeAcog4x32"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LaserActivatedClaymoreMine"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Attachment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"StockM93R"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Airstrike_Binocular"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_SVU_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Dev_SVUA"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineDragonuv",
+							"cartridgeID": "762x54mmRCartridgeAP"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M93R"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM93R",
+							"cartridgeID": "9x19mmCartridge+PFMJ"
+						},
+						{
+							"name": "Scope",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"MagnifierPSO1", "ReflexKobra"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LaserActivatedClaymoreMine"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Attachment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"StockM93R"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Airstrike_Binocular"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_VSS_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"VSSVintorez"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineSR3M30rnd",
+							"cartridgeID": "9x39mmCartridgeAP"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M93R"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM93R",
+							"cartridgeID": "9x19mmCartridge+PFMJ"
+						},
+						{
+							"name": "Scope",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"MagnifierPSO1", "ReflexKobra"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LaserActivatedClaymoreMine"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Attachment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"StockM93R"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Airstrike_Binocular"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M95_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"B4B_BarrettM95"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "B4B_BarrettM95Mag",
+							"cartridgeID": "50BMGCartridgeMk211"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M93R"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM93R",
+							"cartridgeID": "9x19mmCartridge+PFMJ"
+						},
+						{
+							"name": "Scope",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Scope3-12x", "ScopeAcog4x32"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LaserActivatedClaymoreMine"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Attachment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"StockM93R"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Airstrike_Binocular"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_USAS_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"USAS12"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineUSAS10rnd",
+							"cartridgeID": "12GaugeShellSWAG12HE"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": "45ACPCartridge+PFMJ"
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"IFAK_Skye"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_SPAS12_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SPAS12"
+							],
+							"ammoCount": 5,
+							"ammoContainerID": "",
+							"cartridgeID": "12GaugeShellSWAG12HE"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": "45ACPCartridge+PFMJ"
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"RPG7"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "RPG7Rocket",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_SCARL_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Mk16Mod0"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineStanagUSGI30rnd",
+							"cartridgeID": "556x45mmCartridgeAP"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"RPG7"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "RPG7Rocket",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Scope",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexSRO2", "ScopeAcog4x32"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorQC9"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": "45ACPCartridge+PFMJ"
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M1A1T_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ThompsonM1A1"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineThompson30rnd",
+							"cartridgeID": "45ACPCartridge+PFMJ"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"RPG7"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "RPG7Rocket",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": "45ACPCartridge+PFMJ"
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_G3_gold.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 100,
+            "maxKills": -1,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"G3A3"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineG320rnd",
+							"cartridgeID": "762x51mmCartridgeAP"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": "45ACPCartridge+PFMJ"
+						},
+						{
+							"name": "Scope",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexElevatedMRO", "ScopeAcog4x32"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "G3PicatinnyAdapter",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Airstrike_Binocular"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+		{
+            "name": "",
+            "spriteName": "BC2_AEK971_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"AK12"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineAK12",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Sight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexSRO2", "ScopeAcog4x32"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"GP25_Picatinny"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "Cartridge_40mmCaseless_HEF",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Cartridge_40mmCaseless_SMK"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M16_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M16A2"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineStanagUSGI30rnd",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Holosight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexSRO2", "ScopeAcog4x32"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "AR15HandleRailFlat",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M203Classic"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "Cartridge_40x46Grenade_M381",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Cartridge_40x46Grenade_M651"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_AUG_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"AugA3"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineAugA3",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Holosight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexSRO2", "ScopeAcog4x32"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M203Picatinny"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "Cartridge_40x46Grenade_M381",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Cartridge_40x46Grenade_M651"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_AN94_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"AN94Proto"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineAK74N",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Sight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexKobra", "MagnifierPSO1"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"GP25_Classic"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "Cartridge_40mmCaseless_HEF",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Cartridge_40mmCaseless_SMK"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M416_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"H416"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineH416PMAG",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M203Picatinny"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "Cartridge_40x46Grenade_M381",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Holosight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexSRO2", "ScopeAcog4x32"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Cartridge_40x46Grenade_M651"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_9A91_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Dev_9A91"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "Dev_9A91Mag",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"RPG7"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "RPG7Rocket",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorCBJ"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Sight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexKobra", "MagnifierPSO1"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_UZI_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Uzi_Classic"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineMicroUzi32rnd",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"RPG7"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "RPG7Rocket",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorUzi"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_PP2000_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PP2000"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazinePP2000",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"RPG7"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "RPG7Rocket",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Sight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexSRO2", "ScopeAcog4x32"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorPP2000"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_UMP45_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"UMP45"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineUMP45",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"RPG7"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "RPG7Rocket",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorCBJ"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Sight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexElevatedMRO", "ScopeAcog4x32"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_AKS74U_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"AKS74U"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineAKS74U",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"RPG7"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "RPG7Rocket",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Scope",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexKobra", "MagnifierPSO1"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorPBS4"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_PKM_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PKM"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazinePKM",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"IFAK_Skye"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M249_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M249"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM249Box",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"IFAK_Skye"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Sight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexElevatedMRO", "ScopeAcog4x32"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_MG36_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"G36"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineG36Drum",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"IFAK_Skye"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M60_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M60E4"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM60Box",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"IFAK_Skye"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Sight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexElevatedMRO", "ScopeAcog4x32"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_MG3_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"MG42"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineMG42Giant",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"IFAK_Skye"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M24_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M24FO4"
+							],
+							"ammoCount": 5,
+							"ammoContainerID": "",
+							"cartridgeID": "762x51mmCartridgeFMJ"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M93R"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM93R",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Magnifier",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LeupoldScopePicatinny", "ScopeAcog4x32"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LaserActivatedClaymoreMine"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Attachment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"StockM93R"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Airstrike_Binocular"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_SV98_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SV98"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineSV98",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M93R"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM93R",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Magnifier",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Scope3-12x", "ScopeAcog4x32"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LaserActivatedClaymoreMine"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Attachment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"StockM93R"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Airstrike_Binocular"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_SVU_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Dev_SVUA"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineDragonuv",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M93R"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM93R",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Scope",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"MagnifierPSO1", "ReflexKobra"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LaserActivatedClaymoreMine"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Attachment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"StockM93R"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Airstrike_Binocular"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_VSS_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"VSSVintorez"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineSR3M30rnd",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M93R"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM93R",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Scope",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"MagnifierPSO1", "ReflexKobra"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LaserActivatedClaymoreMine"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Attachment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"StockM93R"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Airstrike_Binocular"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M95_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"B4B_BarrettM95"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "B4B_BarrettM95Mag",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M93R"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM93R",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Scope",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Scope3-12x", "ScopeAcog4x32"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LaserActivatedClaymoreMine"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Attachment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"StockM93R"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Airstrike_Binocular"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_USAS_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"USAS12"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineUSAS10rnd",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"IFAK_Skye"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_SPAS12_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SPAS12"
+							],
+							"ammoCount": 5,
+							"ammoContainerID": "",
+							"cartridgeID": "12GaugeShell00Buckshot"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"RPG7"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "RPG7Rocket",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_SCARL_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Mk16Mod0"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineStanagUSGI30rnd",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"RPG7"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "RPG7Rocket",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Scope",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexSRO2", "ScopeAcog4x32"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorQC9"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M1A1T_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ThompsonM1A1"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineThompson30rnd",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"RPG7"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "RPG7Rocket",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_G3_silver.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 50,
+            "maxKills": 100,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"G3A3"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineG320rnd",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Scope",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexElevatedMRO", "ScopeAcog4x32"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "G3PicatinnyAdapter",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Equipment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Airstrike_Binocular"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+		{
+            "name": "",
+            "spriteName": "BC2_AEK971_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"AK12"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineAK12",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Sight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexSRO2"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M16_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M16A2"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineStanagUSGI30rnd",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Holosight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexSRO2"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "AR15HandleRailFlat",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_AUG_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"AugA3"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineAugA3",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Holosight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexSRO2"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_AN94_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"AN94Proto"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineAK74N",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Sight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexKobra"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M416_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"H416"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineH416PMAG",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Holosight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexSRO2"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_9A91_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Dev_9A91"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "Dev_9A91Mag",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorCBJ"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Sight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexKobra"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_UZI_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Uzi_Classic"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineMicroUzi32rnd",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorUzi"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_PP2000_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PP2000"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazinePP2000",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Sight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexSRO2"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorPP2000"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_UMP45_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"UMP45"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineUMP45",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorCBJ"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Sight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexElevatedMRO"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_AKS74U_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"AKS74U"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineAKS74U",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Scope",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexKobra"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorPBS4"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_PKM_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PKM"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazinePKM",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M249_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M249"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM249Box",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Sight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexElevatedMRO"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_MG36_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"G36"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineG36Drum",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M60_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M60E4"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM60Box",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Sight",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexElevatedMRO"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_MG3_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"MG42"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineMG42Giant",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M24_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M24FO4"
+							],
+							"ammoCount": 5,
+							"ammoContainerID": "",
+							"cartridgeID": "762x51mmCartridgeFMJ"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M93R"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM93R",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Magnifier",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LeupoldScopePicatinny"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LaserActivatedClaymoreMine"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Attachment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"StockM93R"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_SV98_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SV98"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineSV98",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M93R"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM93R",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Magnifier",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Scope3-12x"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LaserActivatedClaymoreMine"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Attachment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"StockM93R"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_SVU_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Dev_SVUA"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineDragonuv",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M93R"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM93R",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Scope",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"MagnifierPSO1"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LaserActivatedClaymoreMine"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Attachment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"StockM93R"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_VSS_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"VSSVintorez"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineSR3M30rnd",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M93R"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM93R",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Scope",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"MagnifierPSO1"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LaserActivatedClaymoreMine"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Attachment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"StockM93R"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M95_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"B4B_BarrettM95"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "B4B_BarrettM95Mag",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M93R"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM93R",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Scope",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Scope3-12x"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LaserActivatedClaymoreMine"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Attachment",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"StockM93R"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_USAS_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"USAS12"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineUSAS10rnd",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_SPAS12_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SPAS12"
+							],
+							"ammoCount": 5,
+							"ammoContainerID": "",
+							"cartridgeID": "12GaugeShell00Buckshot"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_SCARL_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Mk16Mod0"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineStanagUSGI30rnd",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Scope",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexSRO2"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorQC9"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M1A1T_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ThompsonM1A1"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineThompson30rnd",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_G3_bronze.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": 25,
+            "maxKills": 50,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"G3A3"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineG320rnd",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Scope",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ReflexElevatedMRO"
+							],
+							"ammoCount": 1,
+							"ammoContainerID": "G3PicatinnyAdapter",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+		{
+            "name": "",
+            "spriteName": "BC2_AEK971_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"AK12"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineAK12",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M16_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M16A2"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineStanagUSGI30rnd",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_AUG_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"AugA3"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineAugA3",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_AN94_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"AN94Proto"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineAK74N",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M416_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"H416"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineH416PMAG",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_9A91_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Dev_9A91"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "Dev_9A91Mag",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorCBJ"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_UZI_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Uzi_Classic"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineMicroUzi32rnd",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorUzi"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_PP2000_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PP2000"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazinePP2000",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorPP2000"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_UMP45_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"UMP45"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineUMP45",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorCBJ"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_AKS74U_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"AKS74U"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineAKS74U",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorPBS4"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_PKM_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PKM"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazinePKM",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M249_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M249"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM249Box",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_MG36_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"G36"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineG36Drum",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M60_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M60E4"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM60Box",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_MG3_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"MG42"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineMG42Giant",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M24_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M24FO4"
+							],
+							"ammoCount": 5,
+							"ammoContainerID": "",
+							"cartridgeID": "762x51mmCartridgeFMJ"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M9"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM9A1",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Magnifier",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LeupoldScopePicatinny"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LaserActivatedClaymoreMine"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_SV98_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SV98"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineSV98",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M9"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM9A1",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Magnifier",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Scope3-12x"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LaserActivatedClaymoreMine"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_SVU_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Dev_SVUA"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineDragonuv",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M9"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM9A1",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Scope",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"MagnifierPSO1"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LaserActivatedClaymoreMine"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_VSS_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"VSSVintorez"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineSR3M30rnd",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M9"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM9A1",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Scope",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"MagnifierPSO1"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LaserActivatedClaymoreMine"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M95_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"B4B_BarrettM95"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "B4B_BarrettM95Mag",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M9"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM9A1",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Scope",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Scope3-12x"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"LaserActivatedClaymoreMine"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_USAS_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"USAS12"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineUSAS10rnd",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_SPAS12_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SPAS12"
+							],
+							"ammoCount": 5,
+							"ammoContainerID": "",
+							"cartridgeID": "12GaugeShell00Buckshot"
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_SCARL_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"Mk16Mod0"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineStanagUSGI30rnd",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Suppressor",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"SuppressorQC9"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_M1A1T_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"ThompsonM1A1"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineThompson30rnd",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        },
+        {
+            "name": "",
+            "spriteName": "BC2_G3_locked.png",
+            "canSpawnLock": true,
+            "playerHealth": 500,
+            "minKills": -1,
+            "maxKills": 25,
+			"subClasses": [
+				{
+					"name": "Weapon Set",
+					"items": [
+						{
+							"name": "Primary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"G3A3"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineG320rnd",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Secondary",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"M1911Modern"
+							],
+							"ammoCount": 2,
+							"ammoContainerID": "MagazineM1911",
+							"cartridgeID": ""
+						},
+						{
+							"name": "Grenade",
+							"requiredSecondaryPieces": true,
+							"uniformObjects": false,
+							"objectCount": 1,
+							"objectID": [
+								"PinnedGrenadeM26"
+							],
+							"ammoCount": 0,
+							"ammoContainerID": "",
+							"cartridgeID": ""
+						}
+					]			
+				}	
+			]
+        }
+    ]
+}
