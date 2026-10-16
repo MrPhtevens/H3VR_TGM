@@ -30,7 +30,7 @@ public class Rush_CapturePoint : MonoBehaviour
     //Set by TGM_Rush when spawned
     [HideInInspector] public int pointIndex = -1;
 
-    public const float fuseTime = 18;       //Seconds from armed to explosion
+    public const float fuseTime = 25;       //Seconds from armed to explosion
     public const float disarmTotalTime = 5; //Seconds defenders need to disarm
     const float sendInterval = 0.2f;        //Host state sync rate
     const float presenceTimeout = 2.5f;     //Remote hands expire if not refreshed

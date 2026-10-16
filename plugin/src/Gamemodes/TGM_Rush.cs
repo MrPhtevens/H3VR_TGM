@@ -375,7 +375,10 @@ public class TGM_Rush : TGM_Gamemode
     const float attackerPushChance = 0.75f;   //Attackers heading for the Mcom, rest go to attack areas
     const float defenderRingChance = 0.3f;    //Defenders holding near the Mcom when nothing is happening
     const float defenderReactRange = 60;      //Defenders this close respond to the Mcom being armed
+    const float onPointRadius = 2.5f;         //Close enough to the Mcom to arm / disarm it
     readonly Dictionary<Sosig, float> nextSosigOrder = new Dictionary<Sosig, float>();
+    readonly HashSet<Sosig> onPoint = new HashSet<Sosig>();                  //Sosigs that must get on the Mcom at all cost
+    readonly Dictionary<Sosig, float> defaultPushRange = new Dictionary<Sosig, float>();   //Original skirmish override range
     float nextAIUpdate = 0;
     bool lastContested = false;
 
@@ -412,8 +415,13 @@ public class TGM_Rush : TGM_Gamemode
                 stale.Add(s);
         }
         for (int i = 0; i < stale.Count; i++)
+        {
             nextSosigOrder.Remove(stale[i]);
+            defaultPushRange.Remove(stale[i]);
+        }
+        onPoint.RemoveWhere(s => s == null);
 
+        Vector3 mcom = objective.transform.position;
         for (int iff = 0; iff < TGM_Manager.instance.team.Length; iff++)
         {
             List<Sosig> sosigs = TGM_Manager.instance.team[iff].sosigs;
@@ -424,10 +432,10 @@ public class TGM_Rush : TGM_Gamemode
             for (int i = 0; i < sosigs.Count; i++)
             {
                 float next;
-                if (!reactNow && nextSosigOrder.TryGetValue(sosigs[i], out next) && Time.time < next)
-                    continue;
-
-                OrderSosig(sosigs[i], iff, objective);
+                if (reactNow || !nextSosigOrder.TryGetValue(sosigs[i], out next) || Time.time >= next)
+                    OrderSosig(sosigs[i], iff, objective);
+                else if (onPoint.Contains(sosigs[i]))
+                    HoldMcom(sosigs[i], mcom); //Pull them back if they got distracted
             }
         }
     }
@@ -448,22 +456,22 @@ public class TGM_Rush : TGM_Gamemode
             //ATTACKERS
             if (armed)
             {
-                //Protect the armed Mcom, a few stay on it
-                if (roll < 0.35f)
-                    CommandSosig(s, RandomRing(mcom, 0, 2), true);
+                //Half sit on the armed Mcom so it can't be disarmed, rest hold close around it
+                if (roll < 0.5f)
+                    SendToMcom(s, mcom);
                 else
-                    CommandSosig(s, RandomRing(mcom, 3, 10), false);
+                    CommandSosig(s, RandomRing(mcom, 3, 8), false, true);
             }
             else if (roll < attackerPushChance)
             {
                 //Rush the Mcom and arm it
-                CommandSosig(s, RandomRing(mcom, 0, 2), true);
+                SendToMcom(s, mcom);
             }
             else
             {
                 //Flank through the attack areas
                 List<Vector3> area = TGM_Manager.instance.team[blueIFF].currentSpawnArea.GetRandomAttackArea(isReversed);
-                CommandSosig(s, area[0], true);
+                CommandSosig(s, area[0], true, false);
             }
         }
         else
@@ -472,36 +480,90 @@ public class TGM_Rush : TGM_Gamemode
             bool inRange = Vector3.Distance(s.transform.position, mcom) <= defenderReactRange;
             if (contested && inRange)
             {
-                //Get on the Mcom to stop / disarm it
+                //Get on the Mcom to stop / disarm it, the rest hold close around it
                 if (roll < 0.7f)
-                    CommandSosig(s, RandomRing(mcom, 0, 2), true);
+                    SendToMcom(s, mcom);
                 else
-                    CommandSosig(s, RandomRing(mcom, 4, 10), false);
+                    CommandSosig(s, RandomRing(mcom, 4, 10), false, true);
             }
             else if (roll < defenderRingChance)
             {
                 //Hold near the Mcom without sitting on it
-                CommandSosig(s, RandomRing(mcom, 6, 15), false);
+                CommandSosig(s, RandomRing(mcom, 6, 15), false, false);
             }
             else
             {
                 List<Vector3> area = TGM_Manager.instance.team[blueIFF].currentSpawnArea.GetRandomDefendArea(isReversed);
-                CommandSosig(s, area[0], false);
+                CommandSosig(s, area[0], false, false);
             }
         }
     }
 
     /// <summary>
-    /// Assault pushes hard to the point, guard holds the point but still engages enemies
+    /// This Sosig's job is the Mcom, it is held to it every AI tick until reassigned
     /// </summary>
-    static void CommandSosig(Sosig s, Vector3 point, bool assault)
+    void SendToMcom(Sosig s, Vector3 mcom)
+    {
+        onPoint.Add(s);
+
+        //Keep pushing to the Mcom even while fighting
+        if (!defaultPushRange.ContainsKey(s))
+            defaultPushRange[s] = s.m_assaultPointOverridesSkirmishPointWhenFurtherThan;
+        s.m_assaultPointOverridesSkirmishPointWhenFurtherThan = 1;
+
+        HoldMcom(s, mcom);
+    }
+
+    /// <summary>
+    /// Run to the Mcom, once there hard guard it (stands on it, still shoots back, doesn't wander)
+    /// </summary>
+    static void HoldMcom(Sosig s, Vector3 mcom)
     {
         if (s == null || s.BodyState == Sosig.SosigBodyState.Dead)
             return;
 
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(point, out hit, 4, NavMesh.AllAreas))
-            point = hit.position;
+        if (Vector3.Distance(s.transform.position, mcom) <= onPointRadius)
+        {
+            bool holding = s.CurrentOrder == Sosig.SosigOrder.GuardPoint
+                && s.m_hardGuard
+                && Vector3.Distance(s.GetGuardPoint(), mcom) <= onPointRadius;
+            if (!holding)
+            {
+                s.CommandGuardPoint(SampleNavMesh(RandomRing(mcom, 0, 1)), true);
+                s.FallbackOrder = Sosig.SosigOrder.GuardPoint;
+            }
+        }
+        else
+        {
+            bool pushing = s.CurrentOrder == Sosig.SosigOrder.Assault
+                && Vector3.Distance(s.m_assaultPoint, mcom) <= onPointRadius;
+            if (!pushing)
+            {
+                s.SetAssaultSpeed(Sosig.SosigMoveSpeed.Running);
+                s.CommandAssaultPoint(SampleNavMesh(RandomRing(mcom, 0, 1)));
+                s.FallbackOrder = Sosig.SosigOrder.Assault;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Assault pushes hard to the point, guard holds the point but still engages enemies.
+    /// Hard guard keeps them at the point instead of wandering off to investigate noises.
+    /// </summary>
+    void CommandSosig(Sosig s, Vector3 point, bool assault, bool hardGuard)
+    {
+        if (s == null || s.BodyState == Sosig.SosigBodyState.Dead)
+            return;
+
+        //No longer an Mcom runner, restore normal fighting behaviour
+        if (onPoint.Remove(s))
+        {
+            float range;
+            if (defaultPushRange.TryGetValue(s, out range))
+                s.m_assaultPointOverridesSkirmishPointWhenFurtherThan = range;
+        }
+
+        point = SampleNavMesh(point);
 
         //Already fighting, keep fighting and head here once it's over
         if (s.CurrentOrder == Sosig.SosigOrder.Skirmish)
@@ -522,9 +584,17 @@ public class TGM_Rush : TGM_Gamemode
         }
         else
         {
-            s.CommandGuardPoint(point, false);
+            s.CommandGuardPoint(point, hardGuard);
             s.FallbackOrder = Sosig.SosigOrder.GuardPoint;
         }
+    }
+
+    static Vector3 SampleNavMesh(Vector3 point)
+    {
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(point, out hit, 4, NavMesh.AllAreas))
+            return hit.position;
+        return point;
     }
 
     static Vector3 RandomRing(Vector3 center, float minRadius, float maxRadius)
