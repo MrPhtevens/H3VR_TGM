@@ -41,9 +41,23 @@ public class TGM_RushAISimple : ITGM_RushAI
 
     const float contestedLinger = 4;        //Arming has to stop for this long before anyone treats it as stopped
 
+    //Attacker waves
+    static float rallyDistance => TGM_Config.RallyDistance.Value;
+    static int pushGroupSize => TGM_Config.PushGroupSize.Value;
+    static float rallyTimeout => TGM_Config.RallyTimeout.Value;
+    static float flankWideDistance => TGM_Config.FlankWideDistance.Value;
+    static float flankHoldTime => TGM_Config.FlankHoldTime.Value;
+    const float rallyRadius = 15;           //Counts as gathered this close to the rally point
+    const float neverPullBackRange = 30;    //Attackers already this close to the Mcom join the attack, never sent back to rally
+
     enum RedRole { Escort, Assault, Flank }
 
     readonly Dictionary<Sosig, RedRole> redRoles = new Dictionary<Sosig, RedRole>();  //Attackers keep their job for life
+    readonly HashSet<Sosig> committed = new HashSet<Sosig>();                          //Attackers that have left the rally and are attacking
+    readonly Dictionary<Sosig, float> flankWideSince = new Dictionary<Sosig, float>(); //When a flanker went wide
+    Vector3 rallyPoint;
+    float firstGathered = -1;
+    int gatheredCount = 0;
     float lastContested = -100;
     readonly Dictionary<Sosig, float> nextOrder = new Dictionary<Sosig, float>();
     readonly Dictionary<Sosig, float> defaultPushRange = new Dictionary<Sosig, float>();
@@ -66,6 +80,12 @@ public class TGM_RushAISimple : ITGM_RushAI
             SetOperator(i, null);
         nextTick = 0;
         lastPhase = -1;
+
+        //New objective, attackers regroup at the new rally point
+        committed.Clear();
+        flankWideSince.Clear();
+        firstGathered = -1;
+        gatheredCount = 0;
     }
 
     public void ResetAll()
@@ -105,11 +125,12 @@ public class TGM_RushAISimple : ITGM_RushAI
             TGM_Manager.instance.team[iff].sosigs.RemoveAll(s => s == null || s.BodyState == Sosig.SosigBodyState.Dead);
         }
 
-        //Red always works the Mcom, Blue only once there is something to disarm
-        UpdateOperator(redIFF, true, mcom);
-        UpdateOperator(blueIFF, phase == Phase.Armed, mcom);
-
         Vector3 approach = GetApproachDirection(mcom);
+        UpdateWaves(mcom, approach, phase);
+
+        //Red's operator comes from the attackers that are pushing, Blue only needs one once there is something to disarm
+        UpdateOperator(redIFF, committed.Count > 0, mcom);
+        UpdateOperator(blueIFF, phase == Phase.Armed, mcom);
         for (int iff = 0; iff < TGM_Manager.instance.team.Length && iff < operators.Length; iff++)
         {
             List<Sosig> sosigs = TGM_Manager.instance.team[iff].sosigs;
@@ -135,7 +156,9 @@ public class TGM_RushAISimple : ITGM_RushAI
     public void OrderNew(Sosig s, Rush_CapturePoint objective, TGM_Area defenderArea, bool isReversed)
     {
         Vector3 mcom = objective.transform.position;
-        Order(s, s.GetIFF(), mcom, SmoothedPhase(objective), GetApproachDirection(mcom), defenderArea, isReversed);
+        Vector3 approach = GetApproachDirection(mcom);
+        rallyPoint = GetRallyPoint(mcom, approach);
+        Order(s, s.GetIFF(), mcom, SmoothedPhase(objective), approach, defenderArea, isReversed);
     }
 
     /// <summary>
@@ -184,11 +207,14 @@ public class TGM_RushAISimple : ITGM_RushAI
             return;
 
         //Operator died or was never picked, the closest living teammate takes over
+        //(for Red only from the attackers that are pushing, so it moves in with them)
         Sosig closest = null;
         float closestDistance = float.MaxValue;
         List<Sosig> sosigs = TGM_Manager.instance.team[iff].sosigs;
         for (int i = 0; i < sosigs.Count; i++)
         {
+            if (iff == redIFF && !committed.Contains(sosigs[i]))
+                continue;
             float distance = Vector3.Distance(sosigs[i].transform.position, mcom);
             if (distance < closestDistance)
             {
@@ -291,10 +317,31 @@ public class TGM_RushAISimple : ITGM_RushAI
                 else
                     CommandSosig(s, AlongApproach(mcom, -approach, 12, 25, 12), true, false, "Red Hunter");  //Hunt defenders coming in
             }
+            else if (!committed.Contains(s))
+            {
+                //Wait for the rest of the wave at the rally point
+                if (Vector3.Distance(s.transform.position, rallyPoint) > 8)
+                {
+                    CommandSosig(s, RandomRing(rallyPoint, 0, 6), true, false, "Red Gathering");
+                    nextOrder[s] = Time.time + 6;
+                }
+                else
+                {
+                    CommandSosig(s, s.transform.position, false, false,
+                        "Red Waiting at rally (" + gatheredCount + "/" + PushThreshold() + ")");
+                    nextOrder[s] = Time.time + 3;
+                }
+            }
             else
             {
-                //Every attacker job ends at the Mcom, and attackers never get sent backwards
                 RedRole role = GetRedRole(s);
+                if (role == RedRole.Flank)
+                {
+                    OrderFlanker(s, mcom, approach);
+                    return;
+                }
+
+                //Every other attacker job ends at the Mcom, and attackers never get sent backwards
                 Vector3 point = PickForward(s, mcom, approach, role);
 
                 //Escorts dig in around the operator once arming starts, everyone else keeps pushing
@@ -353,6 +400,125 @@ public class TGM_RushAISimple : ITGM_RushAI
             role = RedRole.Assault;
         redRoles[s] = role;
         return role;
+    }
+
+    //------------------------------------------------------------------------------
+    // Attacker waves
+    //------------------------------------------------------------------------------
+
+    /// <summary>
+    /// Attackers gather at a rally point and push together once enough have arrived (or after a wait),
+    /// instead of running at the Mcom one by one as they respawn
+    /// </summary>
+    void UpdateWaves(Vector3 mcom, Vector3 approach, Phase phase)
+    {
+        rallyPoint = GetRallyPoint(mcom, approach);
+
+        List<Sosig> attackers = TGM_Manager.instance.team[redIFF].sosigs;
+        int gathered = 0;
+        for (int i = 0; i < attackers.Count; i++)
+        {
+            Sosig s = attackers[i];
+            if (committed.Contains(s))
+                continue;
+
+            //Armed: everyone defends it. Already close: never pulled back to the rally
+            if (phase == Phase.Armed || Vector3.Distance(s.transform.position, mcom) <= neverPullBackRange)
+            {
+                Commit(s);
+                continue;
+            }
+            if (Vector3.Distance(s.transform.position, rallyPoint) <= rallyRadius)
+                gathered++;
+        }
+        gatheredCount = gathered;
+
+        if (gathered == 0)
+        {
+            firstGathered = -1;
+            return;
+        }
+        if (firstGathered < 0)
+            firstGathered = Time.time;
+
+        //Enough of the wave is here, or they've waited long enough: everyone at the rally goes
+        if (gathered >= PushThreshold() || Time.time - firstGathered >= rallyTimeout)
+        {
+            for (int i = 0; i < attackers.Count; i++)
+            {
+                if (!committed.Contains(attackers[i])
+                    && Vector3.Distance(attackers[i].transform.position, rallyPoint) <= rallyRadius)
+                    Commit(attackers[i]);
+            }
+            firstGathered = -1;
+            gatheredCount = 0;
+        }
+    }
+
+    /// <summary>
+    /// How many need to gather before pushing, fewer if not that many attackers are waiting
+    /// </summary>
+    int PushThreshold()
+    {
+        int waiting = 0;
+        List<Sosig> attackers = TGM_Manager.instance.team[redIFF].sosigs;
+        for (int i = 0; i < attackers.Count; i++)
+        {
+            if (!committed.Contains(attackers[i]))
+                waiting++;
+        }
+        return Mathf.Clamp(Mathf.CeilToInt(waiting * 0.6f), 1, pushGroupSize);
+    }
+
+    void Commit(Sosig s)
+    {
+        committed.Add(s);
+        nextOrder.Remove(s);    //New orders this tick
+    }
+
+    /// <summary>
+    /// Between the attackers' spawn and the Mcom, RallyDistance out but never more than 60% of the way back
+    /// </summary>
+    static Vector3 GetRallyPoint(Vector3 mcom, Vector3 approach)
+    {
+        float distance = rallyDistance;
+        TGM_Area redSpawn = TGM_Manager.instance.team[redIFF].currentSpawnArea;
+        if (redSpawn != null)
+            distance = Mathf.Min(distance, Vector3.Distance(redSpawn.transform.position, mcom) * 0.6f);
+        return SampleNavMesh(mcom + approach * distance);
+    }
+
+    /// <summary>
+    /// Flankers go wide to one side first to draw defenders away, then close in on the Mcom from that side
+    /// </summary>
+    void OrderFlanker(Sosig s, Vector3 mcom, Vector3 approach)
+    {
+        Vector3 side = Vector3.Cross(Vector3.up, approach) * (s.GetInstanceID() % 2 == 0 ? 1 : -1);
+
+        float since;
+        if (!flankWideSince.TryGetValue(s, out since))
+        {
+            //Already too close to bother going wide
+            since = Vector3.Distance(s.transform.position, mcom) > flankWideDistance * 0.7f ? Time.time : -1000;
+            flankWideSince[s] = since;
+        }
+
+        if (Time.time - since < flankHoldTime)
+        {
+            Vector3 wide = mcom
+                + side * flankWideDistance * Random.Range(0.8f, 1.2f)
+                + approach * Random.Range(-5f, 10f);
+            bool arrived = Vector3.Distance(s.transform.position, wide) < 10;
+            CommandSosig(s, wide, !arrived, false, arrived ? "Red Flank\ndrawing fire" : "Red Flank\ngoing wide");
+
+            //Close in on time even if the normal re-order would come later
+            float next;
+            if (nextOrder.TryGetValue(s, out next))
+                nextOrder[s] = Mathf.Min(next, since + flankHoldTime);
+            return;
+        }
+
+        CommandSosig(s, RandomArc(mcom, side, 80, 6, 14), true, false, "Red Flank\nclosing in");
     }
 
     /// <summary>
@@ -490,6 +656,8 @@ public class TGM_RushAISimple : ITGM_RushAI
         RemoveDestroyed(defaultPushRange);
         RemoveDestroyed(defaultHearing);
         RemoveDestroyed(redRoles);
+        RemoveDestroyed(flankWideSince);
+        committed.RemoveWhere(s => s == null);
     }
 
     static void RemoveDestroyed<T>(Dictionary<Sosig, T> dictionary)

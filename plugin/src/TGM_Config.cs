@@ -27,6 +27,11 @@ public static class TGM_Config
     public static ConfigEntry<float> AttackerGuardArmedChance;
     public static ConfigEntry<float> AttackerReorderMin;
     public static ConfigEntry<float> AttackerReorderMax;
+    public static ConfigEntry<float> RallyDistance;
+    public static ConfigEntry<int> PushGroupSize;
+    public static ConfigEntry<float> RallyTimeout;
+    public static ConfigEntry<float> FlankWideDistance;
+    public static ConfigEntry<float> FlankHoldTime;
 
     //Rush AI - Squad attackers
     public static ConfigEntry<int> SquadSize;
@@ -84,6 +89,16 @@ public static class TGM_Config
             new ConfigDescription("Attackers get new roles every ReorderMin-ReorderMax seconds.", new AcceptableValueRange<float>(5, 300)));
         AttackerReorderMax = config.Bind(simple, "ReorderMax", 30f,
             new ConfigDescription("See ReorderMin.", new AcceptableValueRange<float>(5, 300)));
+        RallyDistance = config.Bind(simple, "RallyDistance", 45f,
+            new ConfigDescription("Attackers gather this many metres from the Mcom (towards their spawn) before pushing together. Capped at 60% of the spawn-Mcom distance.", new AcceptableValueRange<float>(10, 150)));
+        PushGroupSize = config.Bind(simple, "PushGroupSize", 4,
+            new ConfigDescription("Attackers push once this many have gathered (fewer if not that many are alive).", new AcceptableValueRange<int>(1, 16)));
+        RallyTimeout = config.Bind(simple, "RallyTimeout", 20f,
+            new ConfigDescription("Gathered attackers push anyway after waiting this many seconds.", new AcceptableValueRange<float>(0, 120)));
+        FlankWideDistance = config.Bind(simple, "FlankWideDistance", 30f,
+            new ConfigDescription("Flankers first go this many metres off to one side of the Mcom to draw defenders away.", new AcceptableValueRange<float>(10, 100)));
+        FlankHoldTime = config.Bind(simple, "FlankHoldTime", 25f,
+            new ConfigDescription("Seconds flankers stay out wide before closing in on the Mcom from that side.", new AcceptableValueRange<float>(0, 120)));
 
         const string attack = "Rush AI - Squad attackers";
         SquadSize = config.Bind(attack, "SquadSize", 4,
