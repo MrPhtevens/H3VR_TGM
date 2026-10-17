@@ -39,6 +39,12 @@ public class TGM_RushAISimple : ITGM_RushAI
 
     //------------------------------------------------------------------------------
 
+    const float contestedLinger = 4;        //Arming has to stop for this long before anyone treats it as stopped
+
+    enum RedRole { Escort, Assault, Flank }
+
+    readonly Dictionary<Sosig, RedRole> redRoles = new Dictionary<Sosig, RedRole>();  //Attackers keep their job for life
+    float lastContested = -100;
     readonly Dictionary<Sosig, float> nextOrder = new Dictionary<Sosig, float>();
     readonly Dictionary<Sosig, float> defaultPushRange = new Dictionary<Sosig, float>();
     readonly Dictionary<Sosig, float> defaultHearing = new Dictionary<Sosig, float>();
@@ -65,6 +71,8 @@ public class TGM_RushAISimple : ITGM_RushAI
     public void ResetAll()
     {
         Reset();
+        redRoles.Clear();
+        lastContested = -100;
     }
 
     public void Update(Rush_CapturePoint objective, TGM_Area defenderArea, bool isReversed)
@@ -85,7 +93,7 @@ public class TGM_RushAISimple : ITGM_RushAI
         nextTick = Time.time + tickInterval;
 
         Vector3 mcom = objective.transform.position;
-        Phase phase = GetPhase(objective);
+        Phase phase = SmoothedPhase(objective);
         bool phaseChanged = (int)phase != lastPhase;
         lastPhase = (int)phase;
 
@@ -127,7 +135,21 @@ public class TGM_RushAISimple : ITGM_RushAI
     public void OrderNew(Sosig s, Rush_CapturePoint objective, TGM_Area defenderArea, bool isReversed)
     {
         Vector3 mcom = objective.transform.position;
-        Order(s, s.GetIFF(), mcom, GetPhase(objective), GetApproachDirection(mcom), defenderArea, isReversed);
+        Order(s, s.GetIFF(), mcom, SmoothedPhase(objective), GetApproachDirection(mcom), defenderArea, isReversed);
+    }
+
+    /// <summary>
+    /// Arming flickers on and off as the operator steps on and off the Mcom or dies,
+    /// only treat it as stopped once it has stayed stopped for a few seconds
+    /// </summary>
+    Phase SmoothedPhase(Rush_CapturePoint objective)
+    {
+        Phase phase = GetPhase(objective);
+        if (phase != Phase.Idle)
+            lastContested = Time.time;
+        else if (Time.time - lastContested < contestedLinger)
+            phase = Phase.Arming;
+        return phase;
     }
 
     static Phase GetPhase(Rush_CapturePoint objective)
@@ -269,23 +291,15 @@ public class TGM_RushAISimple : ITGM_RushAI
                 else
                     CommandSosig(s, AlongApproach(mcom, -approach, 12, 25, 12), true, false, "Red Hunter");  //Hunt defenders coming in
             }
-            else if (roll < redEscortChance)
-            {
-                //Escort the operator from the approach side, dig in once arming starts
-                Vector3 point = RandomArc(mcom, approach, 110, 5, 12);
-                if (phase == Phase.Arming)
-                    CommandSosig(s, point, false, true, "Red Escort");
-                else
-                    CommandSosig(s, point, true, false, "Red Escort");
-            }
-            else if (roll < redEscortChance + redFlankChance && defenderArea != null)
-            {
-                List<Vector3> area = defenderArea.GetRandomAttackArea(isReversed);
-                CommandSosig(s, area[0], true, false, "Red Flank");
-            }
             else
             {
-                CommandSosig(s, AlongApproach(mcom, approach, 12, 25, 12), true, false, "Red Push");
+                //Every attacker job ends at the Mcom, and attackers never get sent backwards
+                RedRole role = GetRedRole(s);
+                Vector3 point = PickForward(s, mcom, approach, role);
+
+                //Escorts dig in around the operator once arming starts, everyone else keeps pushing
+                bool dig = role == RedRole.Escort && phase == Phase.Arming;
+                CommandSosig(s, point, !dig, dig, "Red " + role);
             }
         }
         else
@@ -319,6 +333,56 @@ public class TGM_RushAISimple : ITGM_RushAI
                 CommandSosig(s, RandomRing(mcom, 5, 9), false, false, "Blue Anchor");
             }
         }
+    }
+
+    /// <summary>
+    /// Attackers get a job when first seen and keep it, so they don't change their mind every re-order
+    /// </summary>
+    RedRole GetRedRole(Sosig s)
+    {
+        RedRole role;
+        if (redRoles.TryGetValue(s, out role))
+            return role;
+
+        float roll = Random.value;
+        if (roll < redEscortChance)
+            role = RedRole.Escort;
+        else if (roll < redEscortChance + redFlankChance)
+            role = RedRole.Flank;
+        else
+            role = RedRole.Assault;
+        redRoles[s] = role;
+        return role;
+    }
+
+    /// <summary>
+    /// A spot for this attacker's job that is no further from the Mcom than it already is
+    /// </summary>
+    static Vector3 PickForward(Sosig s, Vector3 mcom, Vector3 approach, RedRole role)
+    {
+        float current = Vector3.Distance(s.transform.position, mcom);
+        for (int attempt = 0; attempt < 4; attempt++)
+        {
+            Vector3 point;
+            switch (role)
+            {
+                case RedRole.Escort:
+                    point = RandomArc(mcom, approach, 110, 5, 12);      //Operator's side of the Mcom
+                    break;
+                case RedRole.Flank:
+                    //Always the same side for the same Sosig
+                    Vector3 side = Vector3.Cross(Vector3.up, approach) * (s.GetInstanceID() % 2 == 0 ? 1 : -1);
+                    point = RandomArc(mcom, side, 80, 6, 14);
+                    break;
+                default:
+                    point = RandomRing(mcom, 2, 8);                     //On top of the objective
+                    break;
+            }
+
+            if (Vector3.Distance(point, mcom) <= current + 2)
+                return point;
+        }
+        return RandomRing(mcom, 2, 8);
     }
 
     /// <summary>
@@ -425,9 +489,10 @@ public class TGM_RushAISimple : ITGM_RushAI
         RemoveDestroyed(nextOrder);
         RemoveDestroyed(defaultPushRange);
         RemoveDestroyed(defaultHearing);
+        RemoveDestroyed(redRoles);
     }
 
-    static void RemoveDestroyed(Dictionary<Sosig, float> dictionary)
+    static void RemoveDestroyed<T>(Dictionary<Sosig, T> dictionary)
     {
         List<Sosig> stale = new List<Sosig>();
         foreach (Sosig s in dictionary.Keys)

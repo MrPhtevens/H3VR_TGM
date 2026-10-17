@@ -75,9 +75,9 @@ public static class TGM_Config
 
         const string simple = "Rush AI - Simple attackers";
         AttackerEscortChance = config.Bind(simple, "EscortChance", 0.5f,
-            new ConfigDescription("Share of attackers moving up with the operator on the approach side.", new AcceptableValueRange<float>(0, 1)));
+            new ConfigDescription("Share of attackers escorting the operator, 5-12m from the Mcom on the attackers' side. Attackers keep their job for life.", new AcceptableValueRange<float>(0, 1)));
         AttackerFlankChance = config.Bind(simple, "FlankChance", 0.25f,
-            new ConfigDescription("Share of attackers going through the map's attack areas. The rest push forward along the approach.", new AcceptableValueRange<float>(0, 1)));
+            new ConfigDescription("Share of attackers coming at the Mcom from one side, 6-14m out. The rest assault the Mcom directly (2-8m).", new AcceptableValueRange<float>(0, 1)));
         AttackerGuardArmedChance = config.Bind(simple, "GuardArmedChance", 0.75f,
             new ConfigDescription("Once the Mcom is armed, share of attackers guarding 5-15m around it. The rest hunt towards the defenders' side.", new AcceptableValueRange<float>(0, 1)));
         AttackerReorderMin = config.Bind(simple, "ReorderMin", 15f,
