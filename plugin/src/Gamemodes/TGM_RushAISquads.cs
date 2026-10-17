@@ -10,7 +10,7 @@ namespace TeamsGameMode;
 /// Red moves in squads that leap-frog towards their target, Blue holds layered positions.
 /// Everyone prefers spots with cover from the enemy's direction (see TGM_Tactics).
 /// </summary>
-public class TGM_RushAI
+public class TGM_RushAISquads : ITGM_RushAI
 {
     const int redIFF = TGM_Gamemode.redIFF;
     const int blueIFF = TGM_Gamemode.blueIFF;

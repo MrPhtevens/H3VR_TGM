@@ -90,7 +90,12 @@ public class TGM_Rush : TGM_Gamemode
 
         //Area Setup
         SetupAreas();
-        ai.ResetAll();   //New game, disband squads
+        //New game: pick the AI style from the Tactics setting
+        if (TGM_Config.Tactics.Value == TGM_RushTactics.Squads)
+            ai = new TGM_RushAISquads();
+        else
+            ai = new TGM_RushAISimple();
+        ai.ResetAll();
 
         //Clear old Radios
         for (int i = 0; i < capturePoints.Count; i++)
@@ -368,8 +373,8 @@ public class TGM_Rush : TGM_Gamemode
         ai.Reset();
     }
 
-    //Sosig orders, host only (see TGM_RushAI)
-    readonly TGM_RushAI ai = new TGM_RushAI();
+    //Sosig orders, host only (see TGM_RushAISimple / TGM_RushAISquads)
+    ITGM_RushAI ai = new TGM_RushAISimple();
 
     Rush_CapturePoint GetActiveObjective()
     {

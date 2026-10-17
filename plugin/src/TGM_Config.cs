@@ -17,7 +17,18 @@ public static class TGM_Config
     public static ConfigEntry<float> DisarmTime;
     public static ConfigEntry<float> FuseTime;
 
-    //Rush AI - Attackers
+    //Rush AI - General
+    public static ConfigEntry<TGM_RushTactics> Tactics;
+    public static ConfigEntry<float> CoverSearchRadius;
+
+    //Rush AI - Simple attackers
+    public static ConfigEntry<float> AttackerEscortChance;
+    public static ConfigEntry<float> AttackerFlankChance;
+    public static ConfigEntry<float> AttackerGuardArmedChance;
+    public static ConfigEntry<float> AttackerReorderMin;
+    public static ConfigEntry<float> AttackerReorderMax;
+
+    //Rush AI - Squad attackers
     public static ConfigEntry<int> SquadSize;
     public static ConfigEntry<float> SquadFormWindow;
     public static ConfigEntry<float> TravelStep;
@@ -40,8 +51,6 @@ public static class TGM_Config
     public static ConfigEntry<float> DefenderReactRange;
     public static ConfigEntry<float> DefenderResponderChance;
 
-    //Rush AI - General
-    public static ConfigEntry<float> CoverSearchRadius;
 
     public static void Bind(ConfigFile config)
     {
@@ -57,7 +66,26 @@ public static class TGM_Config
         FuseTime = config.Bind(mcom, "FuseTime", 25f,
             new ConfigDescription("Seconds from armed to explosion.", new AcceptableValueRange<float>(5, 90)));
 
-        const string attack = "Rush AI - Attackers";
+        const string general = "Rush AI - General";
+        Tactics = config.Bind(general, "Tactics", TGM_RushTactics.Simple,
+            "Simple: attackers get individual spread out roles (escort, flank, push) around one operator. " +
+            "Squads: attackers move in squads that travel together and leap-frog under fire. Applies from the next game.");
+        CoverSearchRadius = config.Bind(general, "CoverSearchRadius", 4f,
+            new ConfigDescription("Squads only: how far in metres from a chosen spot Sosigs look for cover.", new AcceptableValueRange<float>(0, 15)));
+
+        const string simple = "Rush AI - Simple attackers";
+        AttackerEscortChance = config.Bind(simple, "EscortChance", 0.5f,
+            new ConfigDescription("Share of attackers moving up with the operator on the approach side.", new AcceptableValueRange<float>(0, 1)));
+        AttackerFlankChance = config.Bind(simple, "FlankChance", 0.25f,
+            new ConfigDescription("Share of attackers going through the map's attack areas. The rest push forward along the approach.", new AcceptableValueRange<float>(0, 1)));
+        AttackerGuardArmedChance = config.Bind(simple, "GuardArmedChance", 0.75f,
+            new ConfigDescription("Once the Mcom is armed, share of attackers guarding 5-15m around it. The rest hunt towards the defenders' side.", new AcceptableValueRange<float>(0, 1)));
+        AttackerReorderMin = config.Bind(simple, "ReorderMin", 15f,
+            new ConfigDescription("Attackers get new roles every ReorderMin-ReorderMax seconds.", new AcceptableValueRange<float>(5, 300)));
+        AttackerReorderMax = config.Bind(simple, "ReorderMax", 30f,
+            new ConfigDescription("See ReorderMin.", new AcceptableValueRange<float>(5, 300)));
+
+        const string attack = "Rush AI - Squad attackers";
         SquadSize = config.Bind(attack, "SquadSize", 4,
             new ConfigDescription("Max Sosigs per attacker squad.", new AcceptableValueRange<int>(1, 8)));
         SquadFormWindow = config.Bind(attack, "SquadFormWindow", 2f,
@@ -98,9 +126,5 @@ public static class TGM_Config
             new ConfigDescription("Defenders within this many metres react when the Mcom is being armed or is armed.", new AcceptableValueRange<float>(0, 300)));
         DefenderResponderChance = config.Bind(defend, "ResponderChance", 0.35f,
             new ConfigDescription("Share of reacting defenders that close in to 3-7m, the rest hold a 10-22m ring.", new AcceptableValueRange<float>(0, 1)));
-
-        const string general = "Rush AI - General";
-        CoverSearchRadius = config.Bind(general, "CoverSearchRadius", 4f,
-            new ConfigDescription("How far in metres from a chosen spot Sosigs look for cover.", new AcceptableValueRange<float>(0, 15)));
     }
 }
