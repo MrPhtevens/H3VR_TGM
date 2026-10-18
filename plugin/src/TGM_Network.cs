@@ -124,7 +124,12 @@ public  class TGM_Network
         if (TGM_Manager.instance.gamemode != null)
             TGM_Manager.instance.gamemode.winIFF = winIFF;
         if (TGM_Manager.gameState != state)
+        {
+            //Joined mid-game: run Pregame first so the gamemode sets itself up (areas, Mcoms, kill events)
+            if (state == TGM_Manager.GameStateEnum.Gameplay && TGM_Manager.gameState < TGM_Manager.GameStateEnum.Pregame)
+                TGM_Manager.instance.SetGameState(TGM_Manager.GameStateEnum.Pregame);
             TGM_Manager.instance.SetGameState(state);
+        }
 
         TGM_MainMenu.instance.UpdateSettings();
     }

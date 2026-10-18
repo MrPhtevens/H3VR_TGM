@@ -126,7 +126,20 @@ public class TGM_Manager : MonoBehaviour
 
         SetGameState(GameStateEnum.GamemodeSelect);
 
+        //Clients joining (or rejoining) mid-game ask the host where the game is at, otherwise they sit on the first menu
+        if (Tools.ServerRunning() && Tools.IsClient())
+            StartCoroutine(RequestSettingsOnJoin());
+
         TGMPlugin.Logger.LogMessage($"TGM Setup Complete");
+    }
+
+    IEnumerator RequestSettingsOnJoin()
+    {
+        //Twice in case the connection was still settling after the scene load
+        yield return new WaitForSeconds(2);
+        TGM_Network.RequestSettings_ToServer();
+        yield return new WaitForSeconds(4);
+        TGM_Network.RequestSettings_ToServer();
     }
 
     void OnDestroy()
