@@ -39,6 +39,12 @@ namespace TeamsGameMode
             StartCoroutine(TGM_McomSounds.Load());
         }
 
+        private void Start()
+        {
+            //After every plugin's Awake, so H3MP and Sosig Player Body are loaded
+            TGM_H3MPBodyFix.Apply(new HarmonyLib.Harmony(PluginInfo.GUID + ".bodyfix"));
+        }
+
 
         public static IEnumerator CreateMapMenu(Vector3 position, Vector3 rotation, bool hideTnH = false)
         {
