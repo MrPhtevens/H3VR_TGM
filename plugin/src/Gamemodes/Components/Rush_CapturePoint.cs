@@ -41,9 +41,9 @@ public class Rush_CapturePoint : MonoBehaviour
     float progress = 0;     //Arming or disarming seconds
     float fuseRemaining = 0;
 
-    //Local presence
-    int handCount = 0;
-    readonly List<Sosig> sosigsInside = new List<Sosig>();
+    //The Mcom's trigger zones. Presence is checked directly against these every frame rather than
+    //with trigger enter/exit, which never fire "exit" for things that die or get disabled inside
+    Collider[] zones;
 
     //Host: remote client hands, clientID -> (iff, last refresh time)
     readonly Dictionary<int, KeyValuePair<int, float>> remotePresence = new Dictionary<int, KeyValuePair<int, float>>();
@@ -62,6 +62,16 @@ public class Rush_CapturePoint : MonoBehaviour
     void Awake()
     {
         SetupAudio();
+
+        List<Collider> triggers = new List<Collider>();
+        foreach (Collider collider in GetComponentsInChildren<Collider>(true))
+        {
+            if (collider.isTrigger)
+                triggers.Add(collider);
+        }
+        zones = triggers.ToArray();
+        if (zones.Length == 0)
+            TGMPlugin.Logger.LogWarning("Mcom has no trigger zone, nobody will be able to arm it");
     }
 
     void OnEnable()
@@ -71,8 +81,6 @@ public class Rush_CapturePoint : MonoBehaviour
         progress = 0;
         fuseRemaining = 0;
         captureCircle.gameObject.SetActive(false);
-        handCount = 0;
-        sosigsInside.Clear();
         remotePresence.Clear();
 
         if (spawnedPrefab != null)
@@ -269,21 +277,19 @@ public class Rush_CapturePoint : MonoBehaviour
     bool IsPresent(int iff)
     {
         //Local player
-        if (handCount > 0
-            && GM.CurrentPlayerBody.GetPlayerIFF() == iff
-            && GM.CurrentPlayerBody.Health > 0)
+        if (GM.CurrentPlayerBody.GetPlayerIFF() == iff && LocalHandsOnMcom())
             return true;
 
-        //Sosigs (host owns them)
-        for (int i = sosigsInside.Count - 1; i >= 0; i--)
+        //The gamemode's team Sosigs (host owns them). Player bodies made of Sosigs don't count,
+        //players count through their hands only
+        if (iff >= 0 && iff < TGM_Manager.instance.team.Length)
         {
-            if (sosigsInside[i] == null || sosigsInside[i].BodyState == Sosig.SosigBodyState.Dead)
+            List<Sosig> sosigs = TGM_Manager.instance.team[iff].sosigs;
+            for (int i = 0; i < sosigs.Count; i++)
             {
-                sosigsInside.RemoveAt(i);
-                continue;
+                if (SosigOnMcom(sosigs[i]))
+                    return true;
             }
-            if (sosigsInside[i].GetIFF() == iff)
-                return true;
         }
 
         //Remote players
@@ -314,7 +320,7 @@ public class Rush_CapturePoint : MonoBehaviour
     {
         //Tell the host when our hands are on the Mcom, refresh while they stay there
         int presenceIFF = -1;
-        if (canCapture && handCount > 0 && GM.CurrentPlayerBody.Health > 0)
+        if (canCapture && LocalHandsOnMcom())
             presenceIFF = GM.CurrentPlayerBody.GetPlayerIFF();
 
         if (presenceIFF != sentPresenceIFF || (presenceIFF >= 0 && Time.time >= nextPresenceSend))
@@ -493,32 +499,45 @@ public class Rush_CapturePoint : MonoBehaviour
         TGM_Manager.PlayAudio(TGM_Manager.PlayAudioEnum.Point);
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        //Local player's hands
-        if (other.name.Contains("Controller ("))
-        {
-            handCount++;
-            return;
-        }
+    //------------------------------------------------------------------------------
+    // Presence
+    //------------------------------------------------------------------------------
 
-        //One entry per body part inside, removed again per part on exit
-        SosigLink sosig = other.gameObject.GetComponent<SosigLink>();
-        if (sosig != null && sosig.S != null)
-            sosigsInside.Add(sosig.S);
+    bool InZone(Vector3 position)
+    {
+        for (int i = 0; i < zones.Length; i++)
+        {
+            if (zones[i] != null && zones[i].enabled && zones[i].bounds.Contains(position))
+                return true;
+        }
+        return false;
     }
 
-    void OnTriggerExit(Collider other)
+    /// <summary>
+    /// The local player is alive and has a hand on the Mcom right now
+    /// </summary>
+    bool LocalHandsOnMcom()
     {
-        if (other.name.Contains("Controller ("))
-        {
-            handCount = Mathf.Max(handCount - 1, 0);
-            return;
-        }
+        FVRPlayerBody body = GM.CurrentPlayerBody;
+        if (body == null || body.Health <= 0)
+            return false;
+        return (body.LeftHand != null && InZone(body.LeftHand.position))
+            || (body.RightHand != null && InZone(body.RightHand.position));
+    }
 
-        SosigLink sosig = other.gameObject.GetComponent<SosigLink>();
-        if (sosig != null)
-            sosigsInside.Remove(sosig.S);
+    /// <summary>
+    /// A living, active Sosig with any body part on the Mcom right now
+    /// </summary>
+    bool SosigOnMcom(Sosig s)
+    {
+        if (s == null || s.BodyState == Sosig.SosigBodyState.Dead || !s.gameObject.activeInHierarchy || s.Links == null)
+            return false;
+        for (int i = 0; i < s.Links.Count; i++)
+        {
+            if (s.Links[i] != null && InZone(s.Links[i].transform.position))
+                return true;
+        }
+        return false;
     }
 
     void OnValidate()

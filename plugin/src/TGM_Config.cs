@@ -94,7 +94,7 @@ public static class TGM_Config
         PushGroupSize = config.Bind(simple, "PushGroupSize", 4,
             new ConfigDescription("Attackers push once this many have gathered (fewer if not that many are alive).", new AcceptableValueRange<int>(1, 16)));
         RallyTimeout = config.Bind(simple, "RallyTimeout", 20f,
-            new ConfigDescription("Gathered attackers push anyway after waiting this many seconds.", new AcceptableValueRange<float>(0, 120)));
+            new ConfigDescription("Gathered attackers push anyway after waiting this many seconds. Any attacker still trying to reach the rally after twice this long joins the attack regardless.", new AcceptableValueRange<float>(0, 120)));
         FlankWideDistance = config.Bind(simple, "FlankWideDistance", 30f,
             new ConfigDescription("Flankers first go this many metres off to one side of the Mcom to draw defenders away.", new AcceptableValueRange<float>(10, 100)));
         FlankHoldTime = config.Bind(simple, "FlankHoldTime", 25f,

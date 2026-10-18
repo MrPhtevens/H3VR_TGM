@@ -55,7 +55,11 @@ public class TGM_RushAISimple : ITGM_RushAI
     readonly Dictionary<Sosig, RedRole> redRoles = new Dictionary<Sosig, RedRole>();  //Attackers keep their job for life
     readonly HashSet<Sosig> committed = new HashSet<Sosig>();                          //Attackers that have left the rally and are attacking
     readonly Dictionary<Sosig, float> flankWideSince = new Dictionary<Sosig, float>(); //When a flanker went wide
+    readonly Dictionary<Sosig, float> gatherSince = new Dictionary<Sosig, float>();     //When an attacker was first sent to the rally
     Vector3 rallyPoint;
+    bool hasRally = false;      //Rally point worked out for the current Mcom
+    Vector3 rallyFor;
+    Vector3 cachedRally;
     float firstGathered = -1;
     int gatheredCount = 0;
     float lastContested = -100;
@@ -84,6 +88,8 @@ public class TGM_RushAISimple : ITGM_RushAI
         //New objective, attackers regroup at the new rally point
         committed.Clear();
         flankWideSince.Clear();
+        gatherSince.Clear();
+        hasRally = false;
         firstGathered = -1;
         gatheredCount = 0;
     }
@@ -319,6 +325,9 @@ public class TGM_RushAISimple : ITGM_RushAI
             }
             else if (!committed.Contains(s))
             {
+                if (!gatherSince.ContainsKey(s))
+                    gatherSince[s] = Time.time;
+
                 //Wait for the rest of the wave at the rally point
                 if (Vector3.Distance(s.transform.position, rallyPoint) > 8)
                 {
@@ -422,8 +431,11 @@ public class TGM_RushAISimple : ITGM_RushAI
             if (committed.Contains(s))
                 continue;
 
-            //Armed: everyone defends it. Already close: never pulled back to the rally
-            if (phase == Phase.Armed || Vector3.Distance(s.transform.position, mcom) <= neverPullBackRange)
+            //Armed: everyone defends it. Already close: never pulled back to the rally.
+            //Been trying to gather for too long (rally unreachable / nobody else coming): go anyway
+            float since;
+            bool waitedTooLong = gatherSince.TryGetValue(s, out since) && Time.time - since >= rallyTimeout * 2;
+            if (phase == Phase.Armed || waitedTooLong || Vector3.Distance(s.transform.position, mcom) <= neverPullBackRange)
             {
                 Commit(s);
                 continue;
@@ -473,19 +485,86 @@ public class TGM_RushAISimple : ITGM_RushAI
     void Commit(Sosig s)
     {
         committed.Add(s);
+        gatherSince.Remove(s);
         nextOrder.Remove(s);    //New orders this tick
     }
 
     /// <summary>
-    /// Between the attackers' spawn and the Mcom, RallyDistance out but never more than 60% of the way back
+    /// RallyDistance before the Mcom along the actual walking route from the attackers' spawn
+    /// (never more than 60% of the way back). Worked out once per objective.
     /// </summary>
-    static Vector3 GetRallyPoint(Vector3 mcom, Vector3 approach)
+    Vector3 GetRallyPoint(Vector3 mcom, Vector3 approach)
     {
-        float distance = rallyDistance;
-        TGM_Area redSpawn = TGM_Manager.instance.team[redIFF].currentSpawnArea;
-        if (redSpawn != null)
-            distance = Mathf.Min(distance, Vector3.Distance(redSpawn.transform.position, mcom) * 0.6f);
-        return SampleNavMesh(mcom + approach * distance);
+        if (hasRally && Vector3.Distance(rallyFor, mcom) < 0.5f)
+            return cachedRally;
+
+        Vector3 spawn = SampleNavMesh(RedSpawnPosition(mcom));
+        Vector3 target = SampleNavMesh(mcom);
+        cachedRally = SampleNavMesh(mcom + approach * Mathf.Min(rallyDistance, Vector3.Distance(spawn, mcom) * 0.6f));
+
+        NavMeshPath path = new NavMeshPath();
+        if (NavMesh.CalculatePath(spawn, target, NavMesh.AllAreas, path)
+            && path.status != NavMeshPathStatus.PathInvalid
+            && path.corners.Length >= 2)
+        {
+            Vector3[] corners = path.corners;
+            float length = 0;
+            for (int i = 1; i < corners.Length; i++)
+                length += Vector3.Distance(corners[i - 1], corners[i]);
+
+            //Walk back from the Mcom end of the route
+            float remaining = Mathf.Min(rallyDistance, length * 0.6f);
+            cachedRally = corners[0];
+            for (int i = corners.Length - 1; i >= 1; i--)
+            {
+                float segment = Vector3.Distance(corners[i], corners[i - 1]);
+                if (remaining <= segment)
+                {
+                    cachedRally = Vector3.Lerp(corners[i], corners[i - 1], segment > 0 ? remaining / segment : 0);
+                    break;
+                }
+                remaining -= segment;
+            }
+        }
+        else
+            TGMPlugin.Logger.LogWarning("Rush AI: no walking route from the attackers' spawn to the Mcom, using a straight line for the rally point");
+
+        hasRally = true;
+        rallyFor = mcom;
+        return cachedRally;
+    }
+
+    /// <summary>
+    /// Where the attackers actually spawn: the average of the current spawn area's Sosig (or player) spawn points
+    /// </summary>
+    static Vector3 RedSpawnPosition(Vector3 fallback)
+    {
+        TGM_Area area = TGM_Manager.instance.team[redIFF].currentSpawnArea;
+        if (area == null)
+            return fallback;
+
+        if (area.spawnPoints != null && area.spawnPoints.Length > redIFF && area.spawnPoints[redIFF] != null)
+        {
+            Transform[] points = area.spawnPoints[redIFF].sosigSpawnPoints;
+            if (points == null || points.Length == 0)
+                points = area.spawnPoints[redIFF].playerSpawnPoints;
+
+            if (points != null)
+            {
+                Vector3 sum = Vector3.zero;
+                int count = 0;
+                for (int i = 0; i < points.Length; i++)
+                {
+                    if (points[i] == null)
+                        continue;
+                    sum += points[i].position;
+                    count++;
+                }
+                if (count > 0)
+                    return sum / count;
+            }
+        }
+        return area.transform.position;
     }
 
     /// <summary>
@@ -601,14 +680,12 @@ public class TGM_RushAISimple : ITGM_RushAI
     /// </summary>
     static Vector3 GetApproachDirection(Vector3 mcom)
     {
-        TGM_Area redSpawn = TGM_Manager.instance.team[redIFF].currentSpawnArea;
-        if (redSpawn != null)
-        {
-            Vector3 dir = redSpawn.transform.position - mcom;
-            dir.y = 0;
-            if (dir.sqrMagnitude > 1)
-                return dir.normalized;
-        }
+        //From the Mcom towards where the attackers actually spawn
+        Vector3 dir = RedSpawnPosition(mcom) - mcom;
+        dir.y = 0;
+        if (dir.sqrMagnitude > 1)
+            return dir.normalized;
+
         Vector2 random = Random.insideUnitCircle.normalized;
         return new Vector3(random.x, 0, random.y);
     }
@@ -657,6 +734,7 @@ public class TGM_RushAISimple : ITGM_RushAI
         RemoveDestroyed(defaultHearing);
         RemoveDestroyed(redRoles);
         RemoveDestroyed(flankWideSince);
+        RemoveDestroyed(gatherSince);
         committed.RemoveWhere(s => s == null);
     }
 
