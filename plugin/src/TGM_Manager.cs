@@ -180,6 +180,7 @@ public class TGM_Manager : MonoBehaviour
 
         TGM_AllyMarkers.Update();
         TGM_AIDebug.Update();
+        TGM_TeamSosigBody.Update();
 
         if (gameState == GameStateEnum.Gameplay)
         {

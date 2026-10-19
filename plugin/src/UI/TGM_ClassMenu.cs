@@ -174,6 +174,9 @@ public class TGM_ClassMenu : MonoBehaviour
         //Despawn any previously owned / held items
         TGM_Manager.instance.localPlayer.DestroyPlayersItems();
 
+        //Optional: look like one of the team's current Sosigs
+        TGM_TeamSosigBody.OnSpawn();
+
         //Spawn all weapons / items
         TGM_PlayerClass.SubClass subClass 
             = TGM_Manager.instance.team[team].GetPlayerTeam().playerClasses[id].subClasses[

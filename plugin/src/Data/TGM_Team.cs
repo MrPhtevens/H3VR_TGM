@@ -153,6 +153,39 @@ public class TGM_Team
         public bool useVehicle;
     }
 
+    /// <summary>
+    /// Every Sosig ID this team currently spawns (sets valid for the team's current kills), without changing spawn order.
+    /// Same set rules as GetSosigID.
+    /// </summary>
+    public List<int> GetCurrentSosigIDs()
+    {
+        List<int> ids = new List<int>();
+        if (sosigTeam < 0 || sosigTeam >= TGM_ModLoader.sosigTeams.Count)
+            return ids;
+        TGM_SosigTeam team = TGM_ModLoader.sosigTeams[sosigTeam];
+        if (team == null || team.sosigSet == null || team.sosigSet.Length == 0)
+            return ids;
+
+        List<TGM_SosigTeam.SosigSet> sets = new List<TGM_SosigTeam.SosigSet>();
+        for (int i = 0; i < team.sosigSet.Length; i++)
+        {
+            bool underMax = team.sosigSet[i].maxKills == -1 || currentKills <= team.sosigSet[i].maxKills;
+            bool overMin = team.sosigSet[i].minKills == -1 || currentKills >= team.sosigSet[i].minKills;
+            if (underMax && overMin)
+                sets.Add(team.sosigSet[i]);
+        }
+        if (sets.Count == 0)
+            sets.Add(team.sosigSet[0]);
+
+        for (int i = 0; i < sets.Count; i++)
+        {
+            int[] setIDs = iff == TGM_Gamemode.redIFF ? sets[i].sosigEnemyIDsRed : sets[i].sosigEnemyIDsBlue;
+            if (setIDs != null)
+                ids.AddRange(setIDs);
+        }
+        return ids;
+    }
+
     public SosigSetGroup GetSosigID(int iff)
     {
         bool useVehicle = false;

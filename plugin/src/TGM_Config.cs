@@ -12,6 +12,9 @@ public static class TGM_Config
     //Debug
     public static ConfigEntry<bool> ShowAIDebug;
 
+    //Sosig Player Body
+    public static ConfigEntry<bool> TeamOutfitBody;
+
     //Rush - Mcom
     public static ConfigEntry<float> ArmTime;
     public static ConfigEntry<float> DisarmTime;
@@ -62,6 +65,10 @@ public static class TGM_Config
         const string debug = "Debug";
         ShowAIDebug = config.Bind(debug, "ShowAIDebug", false,
             "Show a label over every Sosig (team, squad, role, what it is doing) and a line to where it is heading. Only visible on the host.");
+
+        TeamOutfitBody = config.Bind("Sosig Player Body", "TeamOutfitBody", true,
+            "If you use Packer's Sosig Player Body as your H3MP body, become one of your team's current Sosigs (random type and outfit) " +
+            "every time you spawn, and again when your team's Sosig set changes as kills go up. Does nothing on the default body.");
 
         const string mcom = "Rush - Mcom";
         ArmTime = config.Bind(mcom, "ArmTime", 5f,
